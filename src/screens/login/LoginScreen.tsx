@@ -1,41 +1,44 @@
-// src/screens/LoginScreen.tsx
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { TextInput, Text } from 'react-native-paper';
-import Button from '../../components/button';
+import { useState } from 'react';
+import { SafeAreaView, View, StyleSheet } from 'react-native';
+import CheckboxInput from '@/src/components/checkbox';
+import PasswordInput from '@/src/components/passwordInputField';
+import TextInputField from '@/src/components/textInputField';
+import LoginFooter from './components/LoginFooter';
+import LoginHeader from './components/LoginHeader';
+import LoginSecureConnection from './components/SecureConnection';
+import PrimaryButton from '@/src/components/button/primaryButton';
 
-
-export const LoginScreen = ({ navigation }) => {
+const LoginScreen = () => {
   const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
+  const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(false);
+
+  const onSubmit = () => {
+    // TODO: login logic + navigation
+  };
 
   return (
-    <View style={styles.container}>
-      <Text variant="headlineMedium" style={styles.title}>Sign In</Text>
-      <TextInput
-        label="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-      />
-      <TextInput
-        label="Password"
-        secureTextEntry
-        value={pass}
-        onChangeText={setPass}
-        style={styles.input}
-      />
-      <Button onPress={() => navigation.replace('Dashboard')}>
-        Continue
-      </Button>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <LoginHeader />
+      <View style={styles.form}>
+        <TextInputField
+          label="Email Address"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <PasswordInput value={password} onChangeText={setPassword} />
+        <CheckboxInput value={remember} onValueChange={setRemember} />
+        <PrimaryButton onPress={onSubmit}>Sign In</PrimaryButton>
+      </View>
+      <LoginFooter />
+      <LoginSecureConnection />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 16, backgroundColor: '#F3F4F6' },
-  title: { textAlign: 'center', marginBottom: 24 },
-  input: { marginVertical: 8 },
+  container: { flex: 1, paddingHorizontal: 32, backgroundColor: '#F9FAFB' },
+  form: { marginTop: 24 },
 });
 
 export default LoginScreen;

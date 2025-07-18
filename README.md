@@ -61,5 +61,3 @@ mini-client-portal/
 - **Expo CLI:** Simplifies development, building, and testing of React Native apps.
 - **Custom Theming:** Centralized theme management for consistent styling across the app (`src/theme.ts`).
 - **Component-based Architecture:** Reusable UI components organized in `src/components/` for maintainability and scalability.
-
-
