@@ -3,8 +3,9 @@ import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
 import { Text } from 'react-native-paper';
-import Card from '../../components/card';
-import Button from '../../components/button/primaryButton';
+import Card from '@/src/components/card';
+import Button from '@/src/components/button/primaryButton';
+import { theme } from '@/src/theme';
 
 const DashboardScreen = () => {
   return (
@@ -30,7 +31,7 @@ const DashboardScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F3F4F6' },
+  container: { flex: 1, backgroundColor: theme.colors.background },
   content: { padding: 16 },
 });
 

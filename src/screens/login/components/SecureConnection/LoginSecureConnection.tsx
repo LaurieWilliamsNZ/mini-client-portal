@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { theme } from '../../../../theme';
+import { theme } from '@/src/theme';
 import ShieldSVG from './components';
 
 const LoginSecureConnection = () => (
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: theme.spacing(1),
     fontSize: theme.fontSize.sm,
-    color: theme.colors.placeholder,
+    color: theme.colors.textHint,
   },
 });
 

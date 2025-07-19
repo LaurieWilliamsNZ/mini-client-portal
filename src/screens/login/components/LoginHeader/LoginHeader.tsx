@@ -5,8 +5,7 @@ import { theme } from '../../../../theme';
 
 const LoginHeader = () => (
   <View style={styles.container}>
-    <LogoSvg width={theme.spacing(6)} height={theme.spacing(7)} />
-    <Text style={styles.title}>WealthWise</Text>
+    <LogoSvg width={400} />
     <Text style={styles.subtitle}>Investment Advisory Client Portal</Text>
   </View>
 );
@@ -16,14 +15,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: theme.spacing(4),
   },
-  title: {
-    fontSize: theme.fontSize.xl,
-    fontWeight: '700',
-    color: theme.colors.text,
-    marginTop: theme.spacing(1),
-  },
   subtitle: {
-    fontSize: theme.fontSize.base,
+    fontSize: theme.fonts.regular.fontSize,
     color: theme.colors.textHint,
     marginTop: theme.spacing(0.5),
   },

@@ -9,6 +9,9 @@ module.exports = (() => {
   config.transformer = {
     ...transformer,
     babelTransformerPath: require.resolve('react-native-svg-transformer'),
+    // Enable fast refresh for hot reloading
+    enableBabelRCLookup: false,
+    enableBabelRuntime: false,
   };
   config.resolver = {
     ...resolver,

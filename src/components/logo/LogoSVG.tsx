@@ -1,20 +1,30 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import LogoSVG from '@/assets/logo.svg';
+import { theme } from '@/src/theme';
 
-const Div = () => {
-  return <LogoSVG style={styles.divIcon} />;
-};
+export const Logo: React.FC = () => (
+  <View style={styles.container}>
+    <LogoSVG width={theme.spacing(3)} height={theme.spacing(3)} />
+  </View>
+);
 
 const styles = StyleSheet.create({
-  divIcon: {
-    width: '100%',
-    borderRadius: 8,
-    maxWidth: '100%',
-    overflow: 'hidden',
-    flex: 1,
-    height: 56,
+  container: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    borderRadius: theme.borderRadius.base,
+    backgroundColor: theme.colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // iOS shadow
+    shadowColor: theme.colors.shadow,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    // Android elevation
+    elevation: 4,
   },
 });
 
-export default Div;
+export default Logo;

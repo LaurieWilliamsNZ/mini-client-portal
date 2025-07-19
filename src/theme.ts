@@ -17,12 +17,48 @@ export const moderateScale = (size: number, factor = 0.5) =>
 export const normalizeFont = (size: number) =>
   PixelRatio.roundToNearestPixel(moderateScale(size));
 
+const FONT_SIZE_SM = normalizeFont(12);
+const FONT_SIZE_BASE = normalizeFont(16);
+const FONT_SIZE_LG = normalizeFont(20);
+const FONT_SIZE_XL = normalizeFont(24);
+
 const fontConfig = {
   default: {
-    regular: { fontFamily: 'Inter', fontWeight: '400' },
-    medium: { fontFamily: 'Inter', fontWeight: '500' },
-    light: { fontFamily: 'Inter', fontWeight: '300' },
-    thin: { fontFamily: 'Inter', fontWeight: '100' },
+    bold: {
+      fontFamily: 'Inter-Bold',
+      fontWeight: '700' as '700',
+      fontSize: FONT_SIZE_XL,
+      lineHeight: FONT_SIZE_XL + 8,
+      letterSpacing: 0.5,
+    },
+    regular: {
+      fontFamily: 'Inter-Regular',
+      fontWeight: '400' as '400',
+      fontSize: FONT_SIZE_BASE,
+      lineHeight: FONT_SIZE_BASE + 8,
+      letterSpacing: 0.5,
+    },
+    medium: {
+      fontFamily: 'Inter-Medium',
+      fontWeight: '500' as '500',
+      fontSize: FONT_SIZE_LG,
+      lineHeight: FONT_SIZE_LG + 8,
+      letterSpacing: 0.5,
+    },
+    light: {
+      fontFamily: 'Inter',
+      fontWeight: '300' as '300',
+      fontSize: FONT_SIZE_SM,
+      lineHeight: FONT_SIZE_SM + 8,
+      letterSpacing: 0.5,
+    },
+    thin: {
+      fontFamily: 'Inter',
+      fontWeight: '100' as '100',
+      fontSize: FONT_SIZE_SM,
+      lineHeight: FONT_SIZE_SM + 8,
+      letterSpacing: 0.5,
+    },
   },
 };
 
@@ -34,11 +70,17 @@ export const paperTheme = {
     primary: '#0284C7',
     accent: '#EF4D19',
     background: '#F3F4F6',
+    backgroundLight: '#F9FAFB',
     surface: '#FFFFFF',
     text: '#1F2937',
-    placeholder: '#9CA3AF',
+    placeholder: '#ADAEBC',
     textHint: '#4B5563',
     textLight: '#6B7280',
+    label: '#374151',
+    border: '#D1D5DB',
+    checkboxCheckedBg: '#E0F2FE',
+    checkboxBorder: '#D1D5DB',
+    shadow: '#000',
   },
   fonts: configureFonts({
     config: fontConfig.default,
@@ -50,10 +92,10 @@ export const theme = {
   ...paperTheme,
   spacing: (multiplier: number) => moderateScale(multiplier * 8),
   fontSize: {
-    sm: normalizeFont(12),
-    base: normalizeFont(16),
-    lg: normalizeFont(20),
-    xl: normalizeFont(24),
+    sm: FONT_SIZE_SM,
+    base: FONT_SIZE_BASE,
+    lg: FONT_SIZE_LG,
+    xl: FONT_SIZE_XL,
   },
   borderRadius: {
     sm: moderateScale(4),

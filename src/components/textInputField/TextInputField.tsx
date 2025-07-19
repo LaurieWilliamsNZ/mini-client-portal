@@ -1,27 +1,54 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { theme } from '../../theme';
+import { theme } from '@/src/theme';
 
 interface Props {
-  label: string;
+  label?: string;
   value: string;
+  placeholder?: string;
   onChangeText: (text: string) => void;
   secure?: boolean;
+  leftIcon?: string;
   rightIcon?: string;
+  leftIconColor?: string;
+  rightIconColor?: string;
+  mode?: 'flat' | 'outlined';
   onIconPress?: () => void;
+  disabled?: boolean;
+  error?: boolean;
+  helperText?: string;
 }
 
 const TextInputField: React.FC<Props> = props => (
   <TextInput
     {...props}
+    placeholder={props?.placeholder || props?.label}
     style={styles.input}
-    contentStyle={{ fontSize: theme.fontSize.base }}
-    label={props.label}
+    contentStyle={{ fontSize: theme.fontSize.base, color: theme.colors.text }}
     secureTextEntry={props.secure}
+    mode={props.mode || 'outlined'}
+    disabled={props.disabled}
+    error={props.error}
+    placeholderTextColor={theme.colors.placeholder}
+    outlineColor={theme.colors.border}
+    activeOutlineColor={theme.colors.border}
+    theme={{ colors: { primary: theme.colors.label } }}
+    left={
+      props.leftIcon ? (
+        <TextInput.Icon
+          icon={props.leftIcon}
+          color={props.leftIconColor || theme.colors.placeholder}
+        />
+      ) : null
+    }
     right={
       props.rightIcon ? (
-        <TextInput.Icon name={props.rightIcon} onPress={props.onIconPress} />
+        <TextInput.Icon
+          icon={props.rightIcon}
+          onPress={props.onIconPress}
+          color={props.rightIconColor || theme.colors.placeholder}
+        />
       ) : null
     }
   />
@@ -29,9 +56,11 @@ const TextInputField: React.FC<Props> = props => (
 
 const styles = StyleSheet.create({
   input: {
-    marginVertical: theme.spacing(1),
+    marginVertical: 0,
     backgroundColor: theme.colors.surface,
     borderRadius: theme.borderRadius.base,
+    fontSize: theme.fontSize.base,
+    color: theme.colors.text,
   },
 });
 
