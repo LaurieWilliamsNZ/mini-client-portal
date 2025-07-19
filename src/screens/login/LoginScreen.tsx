@@ -76,6 +76,7 @@ const LoginScreen = () => {
               handleSubmit,
               setFieldValue,
               isSubmitting,
+              isValid,
             }) => (
               <View>
                 <Text style={styles.heading}>Welcome Back</Text>
@@ -87,7 +88,7 @@ const LoginScreen = () => {
                   onBlur={handleBlur('email')}
                   placeholder="you@example.com"
                   leftIcon="email"
-                  mode="outlined"
+                  autoCapitalize="none"
                   error={touched.email && errors.email ? errors.email : undefined}
                 />
                 
@@ -119,9 +120,10 @@ const LoginScreen = () => {
                 
                 <PrimaryButton
                   onPress={() => handleSubmit()}
-                  disabled={isSubmitting || isLoading || !values.email || !values.password || Object.keys(errors).length > 0}
+                  disabled={!isValid}
+                  loading={isSubmitting || isLoading}
                 >
-                  {isSubmitting || isLoading ? 'Signing In...' : 'Sign In'}
+                  Sign In
                 </PrimaryButton>
               </View>
             )}

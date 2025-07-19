@@ -4,34 +4,31 @@ import { TextInput } from 'react-native-paper';
 import { theme } from '@/src/theme';
 
 interface Props {
-  label?: string;
   value: string;
   placeholder?: string;
   onChangeText: (text: string) => void;
   onBlur?: (e: any) => void;
-  secure?: boolean;
   leftIcon?: string;
   rightIcon?: string;
-  leftIconColor?: string;
-  rightIconColor?: string;
-  mode?: 'flat' | 'outlined';
   onIconPress?: () => void;
   disabled?: boolean;
-  error?: string | boolean;
-  helperText?: string;
+  error?: string;
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
 }
 
 const TextInputField: React.FC<Props> = props => (
   <TextInput
-    {...props}
-    placeholder={props?.placeholder || props?.label}
-    style={styles.input}
-    contentStyle={{ fontSize: theme.fontSize.base, color: theme.colors.text }}
-    secureTextEntry={props.secure}
-    mode={props.mode || 'outlined'}
+    value={props.value}
+    placeholder={props.placeholder}
+    onChangeText={props.onChangeText}
+    onBlur={props.onBlur}
     disabled={props.disabled}
     error={!!props.error}
-    label={typeof props.error === 'string' ? props.error : props.helperText}
+    label={props.error}
+    autoCapitalize={props.autoCapitalize}
+    style={styles.input}
+    contentStyle={{ fontSize: theme.fontSize.base, color: theme.colors.text }}
+    mode="outlined"
     placeholderTextColor={theme.colors.placeholder}
     outlineColor={theme.colors.border}
     activeOutlineColor={theme.colors.border}
@@ -40,7 +37,7 @@ const TextInputField: React.FC<Props> = props => (
       props.leftIcon ? (
         <TextInput.Icon
           icon={props.leftIcon}
-          color={props.leftIconColor || theme.colors.placeholder}
+          color={theme.colors.placeholder}
         />
       ) : null
     }
@@ -49,7 +46,7 @@ const TextInputField: React.FC<Props> = props => (
         <TextInput.Icon
           icon={props.rightIcon}
           onPress={props.onIconPress}
-          color={props.rightIconColor || theme.colors.placeholder}
+          color={theme.colors.placeholder}
         />
       ) : null
     }
