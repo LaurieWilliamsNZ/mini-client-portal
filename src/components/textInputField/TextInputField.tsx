@@ -8,6 +8,7 @@ interface Props {
   value: string;
   placeholder?: string;
   onChangeText: (text: string) => void;
+  onBlur?: (e: any) => void;
   secure?: boolean;
   leftIcon?: string;
   rightIcon?: string;
@@ -16,7 +17,7 @@ interface Props {
   mode?: 'flat' | 'outlined';
   onIconPress?: () => void;
   disabled?: boolean;
-  error?: boolean;
+  error?: string | boolean;
   helperText?: string;
 }
 
@@ -29,7 +30,8 @@ const TextInputField: React.FC<Props> = props => (
     secureTextEntry={props.secure}
     mode={props.mode || 'outlined'}
     disabled={props.disabled}
-    error={props.error}
+    error={!!props.error}
+    label={typeof props.error === 'string' ? props.error : props.helperText}
     placeholderTextColor={theme.colors.placeholder}
     outlineColor={theme.colors.border}
     activeOutlineColor={theme.colors.border}

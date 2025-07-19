@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import {
   SafeAreaView,
   View,
   StyleSheet,
   Text,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
+import { Formik, FormikHelpers } from 'formik';
 import CheckboxInput from '@/src/components/checkbox';
 import PasswordInput from '@/src/components/passwordInputField';
 import TextInputField from '@/src/components/textInputField';
@@ -14,18 +16,41 @@ import LoginHeader from './components/LoginHeader';
 import LoginSecureConnection from './components/SecureConnection';
 import PrimaryButton from '@/src/components/button/primaryButton';
 import { theme } from '@/src/theme';
+import { loginSchema, LoginFormData } from '@/src/validation/authValidation';
+import { useAuthStore } from '@/src/store/authStore';
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [remember, setRemember] = useState(false);
+  const { login, isLoading, error, clearError } = useAuthStore();
 
-  const onSubmit = () => {
-    // TODO: login logic + navigation
+  // Clear error when component mounts
+  useEffect(() => {
+    clearError();
+  }, [clearError]);
+
+  // Show error alert when there's an error
+  useEffect(() => {
+    if (error) {
+      Alert.alert('Login Error', error);
+    }
+  }, [error]);
+
+  const handleSubmit = async (
+    values: LoginFormData,
+    { setSubmitting }: FormikHelpers<LoginFormData>
+  ) => {
+    try {
+      await login(values.email, values.password);
+      // Navigation will be handled by the auth store state changes
+    } catch (err) {
+      // Error is handled by the store
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const onForgotPassword = () => {
     // TODO: handle forgot password
+    Alert.alert('Forgot Password', 'Forgot password functionality coming soon');
   };
 
   return (
@@ -33,36 +58,78 @@ const LoginScreen = () => {
       <View style={{ flex: 1 }}>
         <LoginHeader />
         <View style={styles.cardContainer}>
-          <View>
-            <Text style={styles.heading}>Welcome Back</Text>
-            <Text style={styles.label}>Email Address</Text>
-            <TextInputField
-              value={email}
-              onChangeText={setEmail}
-              placeholder="you@example.com"
-              leftIcon="email"
-              mode="outlined"
-            />
-            <View style={styles.labelRow}>
-              <Text style={styles.label}>Password</Text>
-              <TouchableOpacity
-                onPress={onForgotPassword}
-                style={styles.forgotPasswordBtn}
-              >
-                <Text style={styles.forgotPassword}>Forgot password?</Text>
-              </TouchableOpacity>
-            </View>
-            <PasswordInput value={password} onChangeText={setPassword} />
-            <View style={styles.spacer24} />
-            <CheckboxInput value={remember} onValueChange={setRemember} />
-            <View style={styles.spacer24} />
-            <PrimaryButton onPress={onSubmit}>Sign In</PrimaryButton>
-          </View>
+          <Formik
+            initialValues={{
+              email: '',
+              password: '',
+              remember: false,
+            }}
+            validationSchema={loginSchema}
+            onSubmit={handleSubmit}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              setFieldValue,
+              isSubmitting,
+            }) => (
+              <View>
+                <Text style={styles.heading}>Welcome Back</Text>
+                
+                <Text style={styles.label}>Email Address</Text>
+                <TextInputField
+                  value={values.email}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  placeholder="you@example.com"
+                  leftIcon="email"
+                  mode="outlined"
+                  error={touched.email && errors.email ? errors.email : undefined}
+                />
+                
+                <View style={styles.labelRow}>
+                  <Text style={styles.label}>Password</Text>
+                  <TouchableOpacity
+                    onPress={onForgotPassword}
+                    style={styles.forgotPasswordBtn}
+                  >
+                    <Text style={styles.forgotPassword}>Forgot password?</Text>
+                  </TouchableOpacity>
+                </View>
+                
+                <PasswordInput
+                  value={values.password}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  error={touched.password && errors.password ? errors.password : undefined}
+                />
+                
+                <View style={styles.spacer24} />
+                
+                <CheckboxInput
+                  value={values.remember}
+                  onValueChange={(value) => setFieldValue('remember', value)}
+                />
+                
+                <View style={styles.spacer24} />
+                
+                <PrimaryButton
+                  onPress={() => handleSubmit()}
+                  disabled={isSubmitting || isLoading || !values.email || !values.password || Object.keys(errors).length > 0}
+                >
+                  {isSubmitting || isLoading ? 'Signing In...' : 'Sign In'}
+                </PrimaryButton>
+              </View>
+            )}
+          </Formik>
         </View>
         <LoginFooter />
         <LoginSecureConnection />
       </View>
-
     </SafeAreaView>
   );
 };

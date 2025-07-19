@@ -5,10 +5,12 @@ import { StyleSheet } from 'react-native';
 const PrimaryButton: React.FC<{
   onPress: () => void;
   children: string;
-}> = ({ onPress, children }) => (
+  disabled?: boolean;
+}> = ({ onPress, children, disabled }) => (
   <PaperButton
     mode="contained"
     onPress={onPress}
+    disabled={disabled}
     style={styles.button}
     labelStyle={styles.label}
   >
