@@ -8,6 +8,7 @@ import { theme } from '@/src/theme';
 import { useAuthStore } from '@/src/store/authStore';
 import InfoCard from './components/infoCard/InfoCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import InfoDetailCard from './components/InfoDetailCard';
 
 const DashboardScreen = () => {
   const { user, logout } = useAuthStore();
@@ -25,32 +26,43 @@ const DashboardScreen = () => {
           <Button onPress={logout}>Logout</Button>
         </View>
 
-        <InfoCard
-          title="Total Portfolio Value"
-          value="$127,450"
-          icon="wallet"
-          change="+2.4% from last month"
-        />
-        <InfoCard
-          title="Active Investments"
-          value="6"
-          icon="investment"
-          change="Across 4 sectors"
-          textStyle="standard"
-        />
-        <InfoCard
-          title="Recent Return Rate"
-          value="8.4%"
-          icon="return"
-          change="Above market average"
-        />
-        <Button
-          onPress={() => {
-            /* dummy */
-          }}
-        >
-          View More
-        </Button>
+        <View style={styles.cardsContainer}>
+          <InfoCard
+            title="Total Portfolio Value"
+            value="$127,450"
+            icon="wallet"
+            change="+2.4% from last month"
+          />
+          <InfoCard
+            title="Active Investments"
+            value="6"
+            icon="investment"
+            change="Across 4 sectors"
+            textStyle="standard"
+          />
+          <InfoCard
+            title="Recent Return Rate"
+            value="8.4%"
+            icon="return"
+            change="Above market average"
+          />
+        </View>
+
+        <View style={styles.detailCardsContainer}>
+          <InfoDetailCard
+            title="Market Watch"
+            subtitle="Real-time stock data"
+          />
+          <InfoDetailCard
+            title="Recent Transactions"
+            subtitle="Last 5 transactions"
+          />
+          <InfoDetailCard
+            title="Messages"
+            subtitle="Recent communications"
+            unreadCount={5}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -68,6 +80,13 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  cardsContainer: {
+    gap: 25,
+    marginBottom: 16,
+  },
+  detailCardsContainer: {
+    gap: 25,
   },
 });
 

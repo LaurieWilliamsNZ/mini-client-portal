@@ -29,7 +29,14 @@ jest.mock('@/src/theme', () => ({
 }));
 
 // Create a test component that mimics InfoCard functionality
-const TestInfoCard = ({ title, value, change, icon = 'wallet', textStyle = 'theme', testID = 'info-card' }: any) => {
+const TestInfoCard = ({
+  title,
+  value,
+  change,
+  icon = 'wallet',
+  textStyle = 'theme',
+  testID = 'info-card',
+}: any) => {
   return (
     <View testID={testID}>
       {title && <Text testID="title">{title}</Text>}
@@ -44,14 +51,14 @@ const TestInfoCard = ({ title, value, change, icon = 'wallet', textStyle = 'them
 describe('InfoCard', () => {
   it('renders with title and value', () => {
     render(<TestInfoCard title="Test Title" value="Test Value" />);
-    
+
     expect(screen.getByText('Test Title')).toBeTruthy();
     expect(screen.getByText('Test Value')).toBeTruthy();
   });
 
   it('renders with change text', () => {
     render(<TestInfoCard change="Test Change" />);
-    
+
     expect(screen.getByText('Test Change')).toBeTruthy();
   });
 
@@ -70,15 +77,15 @@ describe('InfoCard', () => {
 
   it('handles standard text style', () => {
     render(<TestInfoCard change="Test Change" textStyle="standard" />);
-    
+
     expect(screen.getByText('Test Change')).toBeTruthy();
     expect(screen.queryByTestId('up-arrow')).toBeNull();
   });
 
   it('handles theme text style', () => {
     render(<TestInfoCard change="Test Change" textStyle="theme" />);
-    
+
     expect(screen.getByText('Test Change')).toBeTruthy();
     expect(screen.getByTestId('up-arrow')).toBeTruthy();
   });
-}); 
+});

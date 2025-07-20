@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import Wallet from '@/assets/wallet.svg';
 import Investment from '@/assets/investment.svg';
 import Return from '@/assets/return.svg';
@@ -59,28 +58,23 @@ const InfoCard = ({
   const textStyles = getTextStyles();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={[styles.card, styles.container]} testID={testID}>
-        <View style={[styles.cardContent, styles.contentLayout]}>
-          <View style={[styles.textContent, styles.contentLayout]}>
-            {title && <Text style={textStyles.label}>{title}</Text>}
-            {value && <Text style={textStyles.value}>{value}</Text>}{' '}
-            {change && <Text style={textStyles.changeText}>{change}</Text>}
-            {textStyle !== 'standard' && (
-              <UpArrow style={styles.changeIcon} width={11} height={14} />
-            )}
-          </View>
-          {getIconComponent()}
+    <View style={styles.card} testID={testID}>
+      <View style={[styles.cardContent, styles.contentLayout]}>
+        <View style={[styles.textContent, styles.contentLayout]}>
+          {title && <Text style={textStyles.label}>{title}</Text>}
+          {value && <Text style={textStyles.value}>{value}</Text>}{' '}
+          {change && <Text style={textStyles.changeText}>{change}</Text>}
+          {textStyle !== 'standard' && (
+            <UpArrow style={styles.changeIcon} width={11} height={14} />
+          )}
         </View>
+        {getIconComponent()}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   card: {
     width: '100%',
     backgroundColor: theme.colors.surface,
