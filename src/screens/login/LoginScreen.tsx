@@ -80,7 +80,7 @@ const LoginScreen = () => {
             }) => (
               <View>
                 <Text style={styles.heading}>Welcome Back</Text>
-                
+
                 <Text style={styles.label}>Email Address</Text>
                 <TextInputField
                   value={values.email}
@@ -89,9 +89,11 @@ const LoginScreen = () => {
                   placeholder="you@example.com"
                   leftIcon="email"
                   autoCapitalize="none"
-                  error={touched.email && errors.email ? errors.email : undefined}
+                  error={
+                    touched.email && errors.email ? errors.email : undefined
+                  }
                 />
-                
+
                 <View style={styles.labelRow}>
                   <Text style={styles.label}>Password</Text>
                   <TouchableOpacity
@@ -101,23 +103,27 @@ const LoginScreen = () => {
                     <Text style={styles.forgotPassword}>Forgot password?</Text>
                   </TouchableOpacity>
                 </View>
-                
+
                 <PasswordInput
                   value={values.password}
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
-                  error={touched.password && errors.password ? errors.password : undefined}
+                  error={
+                    touched.password && errors.password
+                      ? errors.password
+                      : undefined
+                  }
                 />
-                
+
                 <View style={styles.spacer24} />
-                
+
                 <CheckboxInput
                   value={values.remember}
-                  onValueChange={(value) => setFieldValue('remember', value)}
+                  onValueChange={value => setFieldValue('remember', value)}
                 />
-                
+
                 <View style={styles.spacer24} />
-                
+
                 <PrimaryButton
                   onPress={() => handleSubmit()}
                   disabled={!isValid}

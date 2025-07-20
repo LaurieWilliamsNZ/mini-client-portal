@@ -1,6 +1,4 @@
-
 jest.mock('react-native-vector-icons/MaterialCommunityIcons', () => 'Icon');
-
 
 jest.mock('react-native-svg', () => {
   const { View } = require('react-native');
@@ -29,22 +27,27 @@ jest.mock('react-native-safe-area-context', () => ({
 jest.mock('react-native-paper', () => {
   const React = require('react');
   const { View, Text, TouchableOpacity } = require('react-native');
-  
+
   return {
     Provider: ({ children }) => children,
-    TextInput: ({ value, onChangeText, placeholder, ...props }) => 
-      React.createElement(View, { testID: "text-input" },
+    TextInput: ({ value, onChangeText, placeholder, ...props }) =>
+      React.createElement(
+        View,
+        { testID: 'text-input' },
         React.createElement(Text, null, placeholder),
         React.createElement(Text, null, value),
-        React.createElement(TouchableOpacity, { onPress: () => onChangeText && onChangeText('test') })
+        React.createElement(TouchableOpacity, {
+          onPress: () => onChangeText && onChangeText('test'),
+        })
       ),
-    Button: ({ onPress, children, ...props }) => 
-      React.createElement(TouchableOpacity, { onPress: onPress, testID: "paper-button" },
+    Button: ({ onPress, children, ...props }) =>
+      React.createElement(
+        TouchableOpacity,
+        { onPress: onPress, testID: 'paper-button' },
         React.createElement(Text, null, children)
       ),
   };
 });
-
 
 global.console = {
   ...console,
@@ -53,4 +56,4 @@ global.console = {
   info: jest.fn(),
   warn: jest.fn(),
   error: jest.fn(),
-}; 
+};

@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import LoginScreen from '../LoginScreen';
@@ -50,24 +48,56 @@ jest.mock('../components/SecureConnection', () => {
   const React = require('react');
   const { View, Text } = require('react-native');
   return function MockLoginSecureConnection() {
-    return React.createElement(View, { testID: 'secure-connection' }, 'SecureConnection');
+    return React.createElement(
+      View,
+      { testID: 'secure-connection' },
+      'SecureConnection'
+    );
   };
 });
 
 jest.mock('react-native-paper', () => {
   const React = require('react');
   const { View, Text, TouchableOpacity } = require('react-native');
-  
+
   return {
     Provider: ({ children }: { children: any }) => children,
-    TextInput: ({ value, onChangeText, placeholder, testID }: { value: any; onChangeText: any; placeholder: any; testID?: any }) => 
-      React.createElement(View, { testID: testID || "text-input", placeholder: placeholder, value: value },
+    TextInput: ({
+      value,
+      onChangeText,
+      placeholder,
+      testID,
+    }: {
+      value: any;
+      onChangeText: any;
+      placeholder: any;
+      testID?: any;
+    }) =>
+      React.createElement(
+        View,
+        {
+          testID: testID || 'text-input',
+          placeholder: placeholder,
+          value: value,
+        },
         React.createElement(Text, null, placeholder),
         React.createElement(Text, null, value),
-        React.createElement(TouchableOpacity, { onPress: () => onChangeText && onChangeText('test') })
+        React.createElement(TouchableOpacity, {
+          onPress: () => onChangeText && onChangeText('test'),
+        })
       ),
-    Button: ({ onPress, children, testID }: { onPress: any; children: any; testID?: any }) => 
-      React.createElement(TouchableOpacity, { onPress: onPress, testID: testID || "paper-button" },
+    Button: ({
+      onPress,
+      children,
+      testID,
+    }: {
+      onPress: any;
+      children: any;
+      testID?: any;
+    }) =>
+      React.createElement(
+        TouchableOpacity,
+        { onPress: onPress, testID: testID || 'paper-button' },
         React.createElement(Text, null, children)
       ),
   };
@@ -100,7 +130,7 @@ describe('LoginScreen', () => {
   it('has input fields', () => {
     const { getAllByTestId } = renderLoginScreen();
     const textInputs = getAllByTestId('text-input');
-    
+
     expect(textInputs).toHaveLength(2);
   });
 
@@ -112,4 +142,4 @@ describe('LoginScreen', () => {
       fireEvent.press(signInButton);
     }).not.toThrow();
   });
-}); 
+});

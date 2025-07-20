@@ -12,4 +12,4 @@ export const loginSchema = yup.object({
   remember: yup.boolean().default(false),
 });
 
-export type LoginFormData = yup.InferType<typeof loginSchema>; 
+export type LoginFormData = yup.InferType<typeof loginSchema>;

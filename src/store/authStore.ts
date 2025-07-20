@@ -25,19 +25,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   login: async (email: string, password: string) => {
     set({ isLoading: true, error: null });
-    
+
     try {
       // TODO: Replace with actual API call
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Mock successful login
       const user: User = {
         id: '1',
         email,
         name: 'John Doe',
       };
-      
+
       set({
         user,
         isAuthenticated: true,
@@ -67,4 +67,4 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   setLoading: (loading: boolean) => {
     set({ isLoading: loading });
   },
-})); 
+}));
