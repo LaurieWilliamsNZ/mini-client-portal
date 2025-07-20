@@ -1,47 +1,73 @@
-# Mini Client Portal
+# mini-client-portal
 
-A modern React Native client portal application built with Expo, featuring secure authentication, responsive design, and a clean component architecture.
+A React Native client portal application built with Expo, featuring a modern dashboard with financial information cards, secure authentication, and a clean, responsive design.
 
-## 🚀 Features
+## Features
 
-- **Secure Authentication** - Login screen with form validation
-- **Responsive Design** - Built with React Native and NativeWind for Tailwind CSS support
-- **SVG Support** - Configured for importing and using SVG assets
-- **Code Formatting** - Prettier integration with format-on-save
-- **TypeScript** - Full type safety throughout the application
-- **Modern UI Components** - Reusable components with consistent theming
+- **Dashboard**: Financial information cards showing portfolio value, investments, and return rates
+- **Authentication**: Secure login system with form validation
+- **Responsive Design**: Clean, modern UI that works across different screen sizes
+- **Theme System**: Centralized theming with consistent colors, fonts, and spacing
+- **Component Library**: Reusable UI components for buttons, cards, inputs, and more
+- **TypeScript**: Full TypeScript support for better development experience
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 mini-client-portal/
-├── App.tsx                          # Main application entry point
-├── app.json                         # Expo configuration
-├── assets/                          # Static assets (icons, images, SVGs)
-│   ├── logo.svg                     # Application logo
-│   ├── shield.svg                   # Security icon
-│   └── *.png                        # App icons and splash screens
-├── src/
-│   ├── components/                  # Reusable UI components
-│   │   ├── button/                  # Button component
-│   │   ├── card/                    # Card component
-│   │   ├── logo/                    # Logo component
-│   │   ├── passwordInputField/      # Password input component
-│   │   └── textInputField/          # Text input component
-│   ├── navigation/                  # Navigation configuration
-│   ├── screens/                     # Application screens
-│   │   ├── dashboard/               # Dashboard screen
-│   │   └── login/                   # Login screen and components
-│   ├── theme.ts                     # Centralized theme configuration
-│   └── types/                       # TypeScript type definitions
-├── .prettierrc                      # Prettier configuration
-├── .prettierignore                  # Files to ignore during formatting
-├── metro.config.js                  # Metro bundler configuration
-├── tsconfig.json                    # TypeScript configuration
-└── package.json                     # Dependencies and scripts
+├── App.tsx                  # Main entry point for the React Native app
+├── app.json                 # Expo app configuration
+├── assets/                  # App icons, images, and SVG assets
+│   ├── logo.svg            # App logo
+│   ├── wallet.svg          # Wallet icon for dashboard
+│   ├── investment.svg      # Investment icon for dashboard
+│   ├── return.svg          # Return rate icon for dashboard
+│   └── upArrow.svg         # Up arrow icon for positive changes
+├── index.ts                 # Entry point for Expo
+├── package.json             # Project metadata and dependencies
+├── tsconfig.json            # TypeScript configuration
+├── yarn.lock                # Yarn lockfile for dependency management
+└── src/
+    ├── components/          # Reusable UI components
+    │   ├── button/          # Button components (primary, animated)
+    │   ├── card/            # Card component
+    │   ├── checkbox/        # Checkbox input component
+    │   ├── logo/            # Logo component
+    │   ├── passwordInputField/ # Password input component
+    │   └── textInputField/  # Text input component
+    ├── hooks/               # Custom React hooks
+    │   └── useAuth.ts       # Authentication hook
+    ├── navigation/          # App navigation setup
+    ├── screens/             # App screens
+    │   ├── dashboard/       # Dashboard screen with InfoCard components
+    │   │   └── components/
+    │   │       └── infoCard/ # InfoCard component for financial data
+    │   └── login/           # Login screen
+    ├── store/               # State management
+    │   └── authStore.ts     # Authentication state store
+    ├── theme.ts             # Centralized theme configuration
+    ├── types/               # TypeScript type definitions
+    └── validation/          # Form validation utilities
 ```
 
-## 🛠️ Setup Instructions
+## Key Components
+
+### InfoCard Component
+Located at `src/screens/dashboard/components/infoCard/`, this component displays financial information with:
+- **Dynamic content**: Title, value, and change text
+- **Icon support**: Wallet, investment, or return icons
+- **Text styling**: Theme-based or standard text styles
+- **Responsive design**: Adapts to different screen sizes
+- **Test coverage**: Comprehensive Jest tests
+
+### Theme System
+The app uses a centralized theme system (`src/theme.ts`) with:
+- **Color palette**: Primary, secondary, and semantic colors
+- **Typography**: Font families, sizes, and weights
+- **Spacing**: Consistent spacing and border radius values
+- **Responsive scaling**: Automatic scaling for different screen sizes
+
+## Setup Instructions
 
 ### Prerequisites
 - Node.js (v16 or higher)
@@ -49,102 +75,67 @@ mini-client-portal/
 - Expo CLI (`npm install -g @expo/cli`)
 
 ### Installation
-
 1. **Clone the repository:**
-   ```bash
+   ```sh
    git clone https://github.com/LaurieWilliamsNZ/mini-client-portal.git
    cd mini-client-portal
    ```
 
 2. **Install dependencies:**
-   ```bash
+   ```sh
    yarn install
    ```
 
 3. **Start the development server:**
-   ```bash
+   ```sh
    yarn start
    ```
 
-4. **Run on specific platforms:**
-   ```bash
-   yarn ios      # iOS simulator
-   yarn android  # Android emulator
-   ```
+4. **Run on device/simulator:**
+   - Press `i` for iOS simulator
+   - Press `a` for Android emulator
+   - Scan QR code with Expo Go app on your phone
 
-## 🎨 Development Features
+## Development
 
-### Code Formatting
-This project uses Prettier for consistent code formatting:
+### Running Tests
+```sh
+# Run all tests
+yarn test
 
-- **Format all files:** `yarn format`
-- **Check formatting:** `yarn format:check`
-- **Auto-format on save:** Configured in VS Code settings
+# Run specific test file
+yarn test InfoCard.test.tsx
 
-### SVG Support
-SVG files can be imported directly as React components:
-
-```typescript
-import LogoSvg from '@/assets/logo.svg';
-import ShieldIcon from '@/assets/shield.svg';
+# Run tests in watch mode
+yarn test --watch
 ```
 
-### Path Aliases
-Use `@/` prefix for cleaner imports:
+### Code Structure
+- **Components**: Located in `src/components/` for reusable UI elements
+- **Screens**: Located in `src/screens/` for main app views
+- **Navigation**: Configured in `src/navigation/`
+- **State Management**: Uses Zustand for authentication state
+- **Styling**: Theme-based styling with consistent design tokens
 
-- `@/assets/*` - Access to assets directory
-- `@/src/*` - Access to source directory
-- `@/*` - Access to project root
+### Adding New Components
+1. Create component in appropriate directory
+2. Add TypeScript interfaces for props
+3. Use theme system for styling
+4. Add Jest tests in `__tests__/` directory
+5. Export from index file
 
-## 🏗️ Architecture
+## Technologies Used
 
-### Component Structure
-- **Atomic Design** - Components are organized by complexity and reusability
-- **Props Interface** - All components use TypeScript interfaces for props
-- **Consistent Styling** - Uses centralized theme configuration
+- **React Native (Expo)**: Cross-platform mobile development
+- **TypeScript**: Static typing and better development experience
+- **React Navigation**: App navigation and routing
+- **Zustand**: Lightweight state management
+- **React Native Paper**: Material Design components
+- **Jest & React Native Testing Library**: Testing framework
+- **Expo**: Development platform and build tools
+- **Yarn**: Package management
 
-### Navigation
-- **Stack Navigation** - Handles screen transitions
-- **Type-safe Routes** - Navigation with TypeScript support
-
-### State Management
-- **React Hooks** - Local state management
-- **Form Handling** - React Hook Form for form validation
-
-## 🎯 Available Scripts
-
-```bash
-yarn start          # Start Expo development server
-yarn ios            # Run on iOS simulator
-yarn android        # Run on Android emulator
-yarn format         # Format all files with Prettier
-yarn format:check   # Check if files are properly formatted
-```
-
-## 🛡️ Technologies Used
-
-- **React Native** - Cross-platform mobile development
-- **Expo** - Development platform and tools
-- **TypeScript** - Type-safe JavaScript
-- **React Navigation** - Navigation library
-- **NativeWind** - Tailwind CSS for React Native
-- **React Hook Form** - Form handling and validation
-- **Prettier** - Code formatting
-- **React Native SVG** - SVG support with transformer
-
-## 🔧 Configuration Files
-
-- **`.prettierrc`** - Prettier formatting rules
-- **`metro.config.js`** - Metro bundler with SVG transformer
-- **`tsconfig.json`** - TypeScript with path aliases
-- **`src/theme.ts`** - Centralized theme configuration
-
-## 📱 Platform Support
-
-- ✅ iOS
-- ✅ Android
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -152,6 +143,6 @@ yarn format:check   # Check if files are properly formatted
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
-This project is licensed under the 0BSD License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
