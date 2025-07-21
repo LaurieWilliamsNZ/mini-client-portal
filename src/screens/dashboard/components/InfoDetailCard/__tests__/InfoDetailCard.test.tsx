@@ -95,16 +95,20 @@ describe('InfoDetailCard', () => {
 
   const mockMessages = [
     {
-      sender: 'John Doe',
-      time: '2 hours ago',
-      title: 'Portfolio Update',
-      preview: 'Your portfolio has been updated with the latest transactions.',
+      id: '1',
+      from: 'John Doe',
+      subject: 'Portfolio Update',
+      excerpt: 'Your portfolio has been updated with the latest transactions.',
+      isRead: false,
+      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
     },
     {
-      sender: 'Jane Smith',
-      time: '1 day ago',
-      title: 'Market Alert',
-      preview: 'Important market update for your investments.',
+      id: '2',
+      from: 'Jane Smith',
+      subject: 'Market Alert',
+      excerpt: 'Important market update for your investments.',
+      isRead: true,
+      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
     },
   ];
 
@@ -228,19 +232,15 @@ describe('InfoDetailCard', () => {
         />
       );
 
-      // Check transaction dates
       expect(screen.getByText('2024-01-15')).toBeTruthy();
       expect(screen.getByText('2024-01-14')).toBeTruthy();
 
-      // Check investment names
       expect(screen.getByText('Apple Inc.')).toBeTruthy();
       expect(screen.getByText('Tesla Inc.')).toBeTruthy();
 
-      // Check transaction types
       expect(screen.getByText('Buy')).toBeTruthy();
       expect(screen.getByText('Sell')).toBeTruthy();
 
-      // Check amounts
       expect(screen.getByText('$1,500.00')).toBeTruthy();
       expect(screen.getByText('$2,000.00')).toBeTruthy();
     });
@@ -272,9 +272,9 @@ describe('InfoDetailCard', () => {
       expect(screen.getByText('John Doe')).toBeTruthy();
       expect(screen.getByText('Jane Smith')).toBeTruthy();
 
-      // Check message times
-      expect(screen.getByText('2 hours ago')).toBeTruthy();
-      expect(screen.getByText('1 day ago')).toBeTruthy();
+      // Check message times (formatted by the component)
+      expect(screen.getByText('2h ago')).toBeTruthy();
+      expect(screen.getByText('1d ago')).toBeTruthy();
 
       // Check message titles
       expect(screen.getByText('Portfolio Update')).toBeTruthy();

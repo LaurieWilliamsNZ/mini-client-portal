@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import TextInputField from '../textInputField';
+import { TextInput } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
 import { theme } from '@/src/theme';
 
 interface PasswordInputProps {
@@ -22,21 +23,42 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   const [visible, setVisible] = useState(false);
 
   return (
-    <TextInputField
+    <TextInput
       value={value}
       onChangeText={onChangeText}
       onBlur={onBlur}
-      secure={!visible}
-      leftIcon="lock"
-      rightIcon={visible ? 'eye-off' : 'eye'}
-      onIconPress={() => setVisible(v => !v)}
+      secureTextEntry={!visible}
+      autoCapitalize="none"
       placeholder={placeholder || label}
       mode="outlined"
-      leftIconColor={theme.colors.placeholder}
-      rightIconColor={theme.colors.placeholder}
-      error={error}
+      error={!!error}
+      label={error}
+      style={styles.input}
+      contentStyle={{ fontSize: theme.fontSize.base, color: theme.colors.text }}
+      placeholderTextColor={theme.colors.placeholder}
+      outlineColor={theme.colors.border}
+      activeOutlineColor={theme.colors.border}
+      theme={{ colors: { primary: theme.colors.label } }}
+      left={<TextInput.Icon icon="lock" color={theme.colors.placeholder} />}
+      right={
+        <TextInput.Icon
+          icon={visible ? 'eye-off' : 'eye'}
+          onPress={() => setVisible(v => !v)}
+          color={theme.colors.placeholder}
+        />
+      }
     />
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    marginVertical: 0,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.borderRadius.base,
+    fontSize: theme.fontSize.base,
+    color: theme.colors.text,
+  },
+});
 
 export default PasswordInput;

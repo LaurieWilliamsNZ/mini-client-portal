@@ -1,6 +1,25 @@
 import * as React from 'react';
-import { Text, StyleSheet, View, Image } from 'react-native';
+import { Text, StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { dashboardTheme as theme } from '@/src/theme';
+import MessageModal from '@/src/components/MessageModal';
+import { MessageDetail, useMessagesStore } from '@/src/store/messagesStore';
+
+const formatTimestamp = (timestamp: string) => {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const diffInHours = Math.floor(
+    (now.getTime() - date.getTime()) / (1000 * 60 * 60)
+  );
+
+  if (diffInHours < 1) {
+    return 'Just now';
+  } else if (diffInHours < 24) {
+    return `${diffInHours}h ago`;
+  } else {
+    const diffInDays = Math.floor(diffInHours / 24);
+    return `${diffInDays}d ago`;
+  }
+};
 
 interface Transaction {
   date: string;
@@ -10,11 +29,12 @@ interface Transaction {
 }
 
 interface Message {
-  sender: string;
-  time: string;
-  title: string;
-  preview: string;
-  avatar?: string;
+  id: string;
+  from: string;
+  subject: string;
+  excerpt: string;
+  isRead: boolean;
+  timestamp: string;
 }
 
 interface StockTicker {
@@ -39,6 +59,8 @@ interface InfoDetailCardProps {
   messages?: Message[];
   tickers?: StockTicker[];
   testID?: string;
+  onMessagePress?: (messageId: string) => Promise<void>;
+  onMarkAsRead?: (messageId: string) => Promise<void>;
 }
 
 const InfoDetailCard = ({
@@ -54,7 +76,15 @@ const InfoDetailCard = ({
   messages,
   tickers,
   testID = 'info-detail-card',
+  onMessagePress,
+  onMarkAsRead,
 }: InfoDetailCardProps) => {
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [selectedMessageId, setSelectedMessageId] = React.useState<
+    string | null
+  >(null);
+  const { messageDetails } = useMessagesStore();
+
   const getChangeColor = () => {
     switch (changeType) {
       case 'positive':
@@ -176,44 +206,65 @@ const InfoDetailCard = ({
     </View>
   );
 
-  const renderMessagesContent = () => (
-    <View style={styles.messagesContainer}>
-      {messages?.map((message, index) => (
-        <View
-          key={index}
-          style={[
-            styles.messageItem,
-            index === (messages?.length || 0) - 1 && styles.lastMessageItem,
-          ]}
-        >
-          <View style={styles.messageAvatar}>
-            <Image
-              source={{ uri: `https://i.pravatar.cc/80?img=${index + 1}` }}
-              style={styles.avatarImage}
-            />
-          </View>
-          <View style={styles.messageContent}>
-            <View style={styles.messageHeader}>
-              <Text style={styles.messageSender}>{message.sender}</Text>
-              <Text style={styles.messageTime}>{message.time}</Text>
-            </View>
-            <Text style={styles.messageTitle}>{message.title}</Text>
-            <Text
-              style={styles.messagePreview}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              {message.preview}
+  const renderMessagesContent = () => {
+    // Check if messages are empty or have invalid data
+    const hasValidMessages =
+      messages &&
+      Array.isArray(messages) &&
+      messages.length > 0 &&
+      messages.some(msg => msg.from && msg.subject);
+
+    return (
+      <View style={styles.messagesContainer}>
+        {!hasValidMessages ? (
+          <View style={styles.emptyMessagesContainer}>
+            <Text style={styles.emptyMessagesText}>No messages available</Text>
+            <Text style={styles.emptyMessagesSubtext}>
+              Check back later for updates
             </Text>
           </View>
-          <View style={styles.messageIndicator} />
+        ) : (
+          messages?.map((message, index) => (
+            <TouchableOpacity
+              key={message.id}
+              style={[
+                styles.messageItem,
+                index === (messages?.length || 0) - 1 && styles.lastMessageItem,
+              ]}
+              onPress={() => openMessageModal(message)}
+            >
+              <View style={styles.messageAvatar}>
+                <Image
+                  source={{ uri: `https://i.pravatar.cc/80?img=${index + 1}` }}
+                  style={styles.avatarImage}
+                />
+              </View>
+              <View style={styles.messageContent}>
+                <View style={styles.messageHeader}>
+                  <Text style={styles.messageSender}>{message.from}</Text>
+                  <Text style={styles.messageTime}>
+                    {formatTimestamp(message.timestamp)}
+                  </Text>
+                </View>
+                <Text style={styles.messageTitle}>{message.subject}</Text>
+                <Text
+                  style={styles.messagePreview}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {message.excerpt}
+                </Text>
+              </View>
+              {!message.isRead && <View style={styles.messageIndicator} />}
+            </TouchableOpacity>
+          ))
+        )}
+        <View style={styles.viewAllButton}>
+          <Text style={styles.viewAllText}>View All Messages</Text>
         </View>
-      ))}
-      <View style={styles.viewAllButton}>
-        <Text style={styles.viewAllText}>View All Messages</Text>
       </View>
-    </View>
-  );
+    );
+  };
 
   const renderContent = () => {
     switch (type) {
@@ -226,8 +277,31 @@ const InfoDetailCard = ({
     }
   };
 
+  const handleMarkAsRead = async (messageId: string) => {
+    if (onMarkAsRead) {
+      try {
+        await onMarkAsRead(messageId);
+      } catch (error) {
+        console.error('Error marking message as read:', error);
+      }
+    }
+  };
+
+  const openMessageModal = async (message: Message) => {
+    try {
+      if (onMessagePress) {
+        await onMessagePress(message.id);
+      }
+
+      setSelectedMessageId(message.id);
+      setModalVisible(true);
+    } catch (error) {
+      console.error('Error opening message modal:', error);
+    }
+  };
+
   return (
-    <View style={styles.container} testID={testID}>
+    <View testID={testID}>
       <View style={styles.card}>
         <View style={styles.header}>
           <View style={styles.titleSection}>
@@ -258,14 +332,19 @@ const InfoDetailCard = ({
 
         {renderContent()}
       </View>
+      {selectedMessageId && messageDetails[selectedMessageId] && (
+        <MessageModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          message={messageDetails[selectedMessageId]}
+          onMarkAsRead={handleMarkAsRead}
+        />
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    // Removed marginBottom to use gap from parent container
-  },
   card: {
     backgroundColor: theme.colors.surface,
     borderRadius: theme.borderRadius.lg,
@@ -485,11 +564,11 @@ const styles = StyleSheet.create({
     height: 20,
   },
   messageTime: {
-    width: 39,
+    minWidth: 60,
     ...theme.customFonts.tableText,
     lineHeight: 16,
     color: theme.colors.messageTime,
-    textAlign: 'left',
+    textAlign: 'right',
     height: 16,
   },
   messageTitle: {
@@ -499,6 +578,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     height: 20,
     marginBottom: theme.spacing(0.5),
+    flex: 1,
   },
   messagePreview: {
     ...theme.customFonts.tableText,
@@ -506,6 +586,7 @@ const styles = StyleSheet.create({
     color: theme.colors.messagePreview,
     textAlign: 'left',
     height: 16,
+    flex: 1,
   },
   messageIndicator: {
     width: 8,
@@ -527,6 +608,22 @@ const styles = StyleSheet.create({
     ...theme.customFonts.viewAllText,
     color: theme.colors.viewAllText,
     textAlign: 'center',
+  },
+  emptyMessagesContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: theme.spacing(4),
+  },
+  emptyMessagesText: {
+    ...theme.fonts.regular,
+    fontSize: theme.fontSize.base,
+    color: theme.colors.textLight,
+    marginBottom: theme.spacing(0.5),
+  },
+  emptyMessagesSubtext: {
+    ...theme.fonts.regular,
+    fontSize: theme.fontSize.sm,
+    color: theme.colors.textHint,
   },
   // Ticker styles
   tickersContainer: {

@@ -1,9 +1,14 @@
 import { create } from 'zustand';
+import axios from 'axios';
+import { API_ENDPOINTS } from '@/src/config/env';
 
 interface User {
   id: string;
   email: string;
-  name?: string;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  token: string;
 }
 
 interface AuthState {
@@ -27,15 +32,20 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      // TODO: Replace with actual API call
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Mock successful login
-      const user: User = {
-        id: '1',
+      const response = await axios.post(API_ENDPOINTS.AUTH.LOGIN, {
         email,
-        name: 'John Doe',
+        password,
+      });
+
+      const userData = response.data;
+
+      const user: User = {
+        id: userData.id,
+        email,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        avatar: userData.avatar,
+        token: userData.token,
       };
 
       set({
@@ -45,9 +55,26 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         error: null,
       });
     } catch (error) {
+      let errorMessage = 'Login failed';
+
+      if (axios.isAxiosError(error)) {
+        if (error.response?.data?.message) {
+          errorMessage = error.response.data.message;
+        } else if (error.response?.status === 401) {
+          errorMessage = 'Invalid email or password';
+        } else if (error.response?.status === 500) {
+          errorMessage = 'Server error. Please try again later.';
+        } else if (error.code === 'ECONNREFUSED') {
+          errorMessage =
+            'Unable to connect to server. Please check your connection.';
+        }
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
       set({
         isLoading: false,
-        error: error instanceof Error ? error.message : 'Login failed',
+        error: errorMessage,
       });
     }
   },

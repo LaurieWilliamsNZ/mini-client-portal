@@ -4,7 +4,7 @@ import Wallet from '@/assets/wallet.svg';
 import Investment from '@/assets/investment.svg';
 import Return from '@/assets/return.svg';
 import UpArrow from '@/assets/upArrow.svg';
-import { theme } from '@/src/theme';
+import { dashboardTheme as theme } from '@/src/theme';
 import AnimatedCounter from '@/src/components/AnimatedCounter';
 
 interface InfoCardProps {
@@ -67,18 +67,17 @@ const InfoCard = ({
       <View style={[styles.cardContent, styles.contentLayout]}>
         <View style={[styles.textContent, styles.contentLayout]}>
           {title && <Text style={textStyles.label}>{title}</Text>}
-          {value && (
-            animated ? (
-              <AnimatedCounter 
-                value={value} 
+          {value &&
+            (animated ? (
+              <AnimatedCounter
+                value={value}
                 style={textStyles.value}
                 delay={animationDelay}
                 testID="animated-value"
               />
             ) : (
               <Text style={textStyles.value}>{value}</Text>
-            )
-          )}
+            ))}
           {change && <Text style={textStyles.changeText}>{change}</Text>}
           {textStyle !== 'standard' && (
             <UpArrow style={styles.changeIcon} width={11} height={14} />
@@ -124,14 +123,14 @@ const styles = StyleSheet.create({
     top: -1,
     ...theme.fonts.medium,
     color: theme.colors.textHint,
-    width: 135,
+    width: 200,
     left: 0,
   },
   value: {
     top: 19,
     ...theme.fonts.bold,
     color: theme.colors.text,
-    width: 137,
+    width: 200,
     height: 36,
     textAlign: 'left',
     left: 0,
@@ -141,8 +140,8 @@ const styles = StyleSheet.create({
     top: 67,
     left: 15,
     ...theme.fonts.regular,
-    color: '#16a34a',
-    width: 150,
+    color: theme.colors.tickerPositive,
+    width: 200,
   },
   changeIcon: {
     top: 71,
@@ -154,27 +153,28 @@ const styles = StyleSheet.create({
   },
   textContent: {
     top: 0,
-    width: 166,
+    width: 250,
     left: 0,
   },
   icon: {
+    position: 'absolute',
     top: 22,
-    right: 25,
+    right: 50,
     borderRadius: theme.borderRadius.base,
     width: 44,
     height: 44,
-    position: 'absolute',
   },
   cardContent: {
     top: 25,
     left: 25,
-    width: 339,
+    width: '100%',
+    paddingRight: 80,
   },
   standardChangeText: {
     fontSize: 14,
     lineHeight: 20,
     fontFamily: 'Inter-Regular',
-    color: '#6b7280',
+    color: theme.colors.neutralText,
   },
   standardChangeTextPosition: {
     left: 0,

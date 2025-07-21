@@ -1,0 +1,349 @@
+{
+  "uuid": "37f69daf-1ef6-4a96-a217-2ec03b71a101",
+  "lastMigration": 33,
+  "name": "MiniClientDashboard",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "7874beae-4687-427f-a175-7a795f40bceb",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "/auth/login",
+      "responses": [
+        {
+          "uuid": "970e6836-eb83-4d93-91f0-21c5a01be027",
+          "body": "{\"firstName\": \"John\", \"lastName\": \"Doe\", \"avatar\": \"https://i.pravatar.cc/150?u={{guid}}\", \"token\": \"{{uuid}}\"}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "$.email",
+              "value": "user@example.com",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "$.password",
+              "value": "password123",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "5f9a86d0-961e-4bb0-89b8-b86095b3c3c1",
+          "body": "{ \"error\": \"Invalid credentials\" }",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "9f759012-2376-47c2-9642-e195839a09df",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "/messages",
+      "responses": [
+        {
+          "uuid": "e303ed38-dcc5-4f44-bf46-d2cfd9eba50a",
+          "body": "[\n  {\n    \"id\": \"1ec21de1-f5c3-4123-832e-2bbb830aaaef\",\n    \"from\": \"Michael Chen\",\n    \"avatar\": \"https://i.pravatar.cc/150?u=michael-chen\",\n    \"subject\": \"Q4 Portfolio Review\",\n    \"excerpt\": \"Your quarterly review is ready for discussion. Please schedule a call to review your portfolio performance and discuss any adjustments needed.\",\n    \"isRead\": false,\n    \"timestamp\": \"2024-01-15T10:30:00Z\"\n  },\n  {\n    \"id\": \"0bfbe2e6-fdfe-4b54-b1c7-1199e591f8f2\",\n    \"from\": \"Lisa Rodriguez\",\n    \"avatar\": \"https://i.pravatar.cc/150?u=lisa-rodriguez\",\n    \"subject\": \"Dividend Payment Processed\",\n    \"excerpt\": \"Your quarterly dividend of $2,847.50 has been processed and will be deposited to your account within 2-3 business days.\",\n    \"isRead\": false,\n    \"timestamp\": \"2024-01-14T14:15:00Z\"\n  },\n  {\n    \"id\": \"c446fd9a-402e-40cf-a17b-8712c6f323b1\",\n    \"from\": \"System Alert\",\n    \"avatar\": \"https://i.pravatar.cc/150?u=system-alert\",\n    \"subject\": \"Market Volatility Alert\",\n    \"excerpt\": \"Increased volatility detected in tech sector. Consider reviewing your tech holdings and rebalancing if necessary.\",\n    \"isRead\": true,\n    \"timestamp\": \"2024-01-13T09:45:00Z\"\n  },\n  {\n    \"id\": \"68d65a31-16cd-4ade-9d0f-be8ca1b42280\",\n    \"from\": \"Sarah Johnson\",\n    \"avatar\": \"https://i.pravatar.cc/150?u=sarah-johnson\",\n    \"subject\": \"New Investment Opportunity\",\n    \"excerpt\": \"We've identified a promising new investment opportunity in the renewable energy sector. Would you like to learn more?\",\n    \"isRead\": true,\n    \"timestamp\": \"2024-01-12T16:20:00Z\"\n  },\n  {\n    \"id\": \"04d7e559-b5af-431b-a62c-d405b437d22b\",\n    \"from\": \"David Wilson\",\n    \"avatar\": \"https://i.pravatar.cc/150?u=david-wilson\",\n    \"subject\": \"Tax Document Available\",\n    \"excerpt\": \"Your annual tax documents are now available in your account. Please download them for your tax filing.\",\n    \"isRead\": false,\n    \"timestamp\": \"2024-01-11T11:30:00Z\"\n  }\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "209e4f7e-dd56-4e20-abb8-addf4435f93b",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "/messages/:id",
+      "responses": [
+        {
+          "uuid": "648a5907-8f5e-44f0-9612-e8bb0ee959df",
+          "body": "{\n  \"id\": \"1ec21de1-f5c3-4123-832e-2bbb830aaaef\",\n  \"from\": \"Michael Chen\",\n  \"role\": \"Senior Portfolio Manager\",\n  \"avatar\": \"https://i.pravatar.cc/150?u=michael-chen\",\n  \"subject\": \"Q4 Portfolio Review\",\n  \"body\": \"Dear valued client,\\n\\nI hope this message finds you well. I'm writing to inform you that your Q4 2024 portfolio review is now complete and ready for our discussion.\\n\\n**Portfolio Performance Summary:**\\n\\nYour portfolio has shown strong performance this quarter with an overall growth of 8.4%. Here are the key highlights:\\n\\n**Top Performers:**\\n• Technology Sector: +12.3% (led by your positions in AAPL and MSFT)\\n• Healthcare: +9.1% (particularly strong in biotech holdings)\\n• Consumer Discretionary: +7.8%\\n\\n**Areas for Review:**\\n• International exposure has underperformed (-2.1%)\\n• Energy sector volatility may require rebalancing\\n• Bond allocation could be optimized for current interest rate environment\\n\\n**Recommendations:**\\n1. Consider increasing international diversification\\n2. Review energy sector allocation given recent market conditions\\n3. Evaluate bond duration strategy\\n4. Discuss potential new opportunities in emerging markets\\n\\n**Next Steps:**\\nI've prepared a detailed 15-page analysis report that I can walk you through. Please let me know your preferred time for a 30-minute review call. I'm available:\\n• Tuesday, January 16th: 2:00 PM - 4:00 PM\\n• Wednesday, January 17th: 10:00 AM - 12:00 PM\\n• Thursday, January 18th: 3:00 PM - 5:00 PM\\n\\nIf none of these times work, please let me know and I'll arrange an alternative.\\n\\n**Important Notes:**\\n• Your annual rebalancing is due in February\\n• Tax-loss harvesting opportunities are available\\n• New investment minimums have been reduced for existing clients\\n\\nI look forward to our discussion and ensuring your portfolio continues to align with your long-term financial goals.\\n\\nBest regards,\\n\\nMichael Chen\\nSenior Portfolio Manager\\nWealthWise Financial Advisors\\n\\nP.S. Don't forget to check your secure document portal for the detailed Q4 report and updated investment policy statement.\",\n  \"isRead\": false,\n  \"timestamp\": \"2024-01-15T10:30:00Z\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Michael Chen - Q4 Portfolio Review",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "id",
+              "value": "1ec21de1-f5c3-4123-832e-2bbb830aaaef",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "648a5907-8f5e-44f0-9612-e8bb0ee959e0",
+          "body": "{\n  \"id\": \"0bfbe2e6-fdfe-4b54-b1c7-1199e591f8f2\",\n  \"from\": \"Lisa Rodriguez\",\n  \"role\": \"Client Services Manager\",\n  \"avatar\": \"https://i.pravatar.cc/150?u=lisa-rodriguez\",\n  \"subject\": \"Dividend Payment Processed\",\n  \"body\": \"Dear valued client,\\n\\nI'm pleased to inform you that your quarterly dividend payment has been successfully processed.\\n\\n**Payment Details:**\\n• Dividend Amount: $2,847.50\\n• Payment Date: January 14, 2024\\n• Deposit Timeline: 2-3 business days\\n• Account: Primary Investment Account\\n\\n**Dividend Breakdown:**\\n• Apple Inc. (AAPL): $1,245.00\\n• Microsoft Corp. (MSFT): $892.50\\n• Johnson & Johnson (JNJ): $710.00\\n\\n**Tax Information:**\\nThis dividend payment will be reported on your 2024 Form 1099-DIV. The breakdown includes:\\n• Qualified Dividends: $2,125.00 (eligible for lower tax rates)\\n• Non-Qualified Dividends: $722.50\\n\\n**Next Steps:**\\n• Monitor your account for the deposit\\n• Consider reinvestment options if desired\\n• Review tax implications with your accountant\\n\\nIf you have any questions about this dividend payment or would like to discuss reinvestment strategies, please don't hesitate to contact me.\\n\\nBest regards,\\n\\nLisa Rodriguez\\nClient Services Manager\\nWealthWise Financial Advisors\",\n  \"isRead\": false,\n  \"timestamp\": \"2024-01-14T14:15:00Z\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Lisa Rodriguez - Dividend Payment",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "id",
+              "value": "0bfbe2e6-fdfe-4b54-b1c7-1199e591f8f2",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "648a5907-8f5e-44f0-9612-e8bb0ee959e1",
+          "body": "{\n  \"id\": \"c446fd9a-402e-40cf-a17b-8712c6f323b1\",\n  \"from\": \"System Alert\",\n  \"role\": \"Automated Monitoring System\",\n  \"avatar\": \"https://i.pravatar.cc/150?u=system-alert\",\n  \"subject\": \"Market Volatility Alert\",\n  \"body\": \"**SYSTEM ALERT - MARKET VOLATILITY DETECTED**\\n\\nDear client,\\n\\nOur automated monitoring system has detected increased volatility in the technology sector that may impact your portfolio.\\n\\n**Alert Details:**\\n• Sector: Technology\\n• Volatility Index: 28.5 (up from 18.2)\\n• Affected Holdings: AAPL, MSFT, GOOGL\\n• Time Period: Last 24 hours\\n\\n**Market Analysis:**\\n• Tech sector down 3.2% in pre-market trading\\n• Increased trading volume across major tech stocks\\n• Options volatility spike indicating uncertainty\\n\\n**Recommended Actions:**\\n1. Review your tech sector allocation\\n2. Consider rebalancing if tech exceeds target allocation\\n3. Monitor for additional volatility\\n4. Contact your advisor if concerned\\n\\n**Portfolio Impact:**\\nYour current tech allocation is 32% of total portfolio. This is within your target range of 25-35%, but we recommend monitoring closely.\\n\\n**Next Steps:**\\n• We'll continue monitoring market conditions\\n• Automated alerts will be sent for significant changes\\n• Schedule a call if you'd like to discuss strategy adjustments\\n\\nThis is an automated alert. For personalized advice, please contact your portfolio manager.\\n\\nBest regards,\\n\\nWealthWise Investment Management System\",\n  \"isRead\": true,\n  \"timestamp\": \"2024-01-13T09:45:00Z\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "System Alert - Market Volatility",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "id",
+              "value": "c446fd9a-402e-40cf-a17b-8712c6f323b1",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "648a5907-8f5e-44f0-9612-e8bb0ee959e2",
+          "body": "{\n  \"id\": \"68d65a31-16cd-4ade-9d0f-be8ca1b42280\",\n  \"from\": \"Sarah Johnson\",\n  \"role\": \"Senior Investment Advisor\",\n  \"avatar\": \"https://i.pravatar.cc/150?u=sarah-johnson\",\n  \"subject\": \"New Investment Opportunity\",\n  \"body\": \"Dear valued client,\\n\\nI hope this message finds you well. I wanted to personally reach out about an exciting new investment opportunity we've identified in the renewable energy sector.\\n\\n**Investment Overview:**\\n\\nWe've been monitoring a promising renewable energy fund that focuses on solar and wind infrastructure projects. This fund has shown consistent growth and aligns well with your investment goals and ESG preferences.\\n\\n**Key Highlights:**\\n• Fund: Green Energy Infrastructure Fund (GEIF)\\n• Focus: Solar and wind energy infrastructure\\n• Historical Returns: 12.8% annualized over 5 years\\n• Risk Profile: Moderate (suitable for your portfolio)\\n• Minimum Investment: $25,000\\n\\n**Why This Opportunity:**\\n1. **Growth Potential**: Renewable energy sector expected to grow 15% annually\\n2. **Diversification**: Adds exposure to infrastructure and clean energy\\n3. **ESG Alignment**: Matches your sustainability investment preferences\\n4. **Stable Returns**: Infrastructure provides consistent cash flow\\n\\n**Portfolio Fit:**\\nThis investment would represent approximately 3% of your total portfolio, which is within our recommended allocation for alternative investments.\\n\\n**Next Steps:**\\n• Review the detailed prospectus (attached)\\n• Schedule a call to discuss the opportunity\\n• Consider a small initial investment to test\\n\\nI'm available for a detailed discussion this week. Would you like to schedule a call to learn more about this opportunity?\\n\\nBest regards,\\n\\nSarah Johnson\\nSenior Investment Advisor\\nWealthWise Financial Advisors\",\n  \"isRead\": true,\n  \"timestamp\": \"2024-01-12T16:20:00Z\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Sarah Johnson - Investment Opportunity",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "id",
+              "value": "68d65a31-16cd-4ade-9d0f-be8ca1b42280",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "648a5907-8f5e-44f0-9612-e8bb0ee959e3",
+          "body": "{\n  \"id\": \"04d7e559-b5af-431b-a62c-d405b437d22b\",\n  \"from\": \"David Wilson\",\n  \"role\": \"Tax Services Manager\",\n  \"avatar\": \"https://i.pravatar.cc/150?u=david-wilson\",\n  \"subject\": \"Tax Document Available\",\n  \"body\": \"Dear valued client,\\n\\nI'm writing to inform you that your annual tax documents are now available in your secure document portal.\\n\\n**Available Documents:**\\n• Form 1099-DIV (Dividend Income)\\n• Form 1099-B (Capital Gains/Losses)\\n• Form 1099-INT (Interest Income)\\n• Annual Account Summary\\n• Cost Basis Report\\n\\n**Important Tax Information:**\\n\\n**Dividend Income:**\\n• Total Dividends: $8,245.50\\n• Qualified Dividends: $6,125.00\\n• Foreign Tax Paid: $125.30\\n\\n**Capital Gains/Losses:**\\n• Short-term gains: $2,450.00\\n• Long-term gains: $12,800.00\\n• Realized losses: $1,200.00\\n• Net capital gain: $14,050.00\\n\\n**Interest Income:**\\n• Money market interest: $450.25\\n• Bond interest: $1,125.75\\n\\n**Filing Deadlines:**\\n• Individual returns: April 15, 2024\\n• Extension requests: April 15, 2024\\n• Estimated payments: Quarterly\\n\\n**Next Steps:**\\n1. Download all documents from your secure portal\\n2. Review for accuracy\\n3. Provide to your tax preparer\\n4. Contact us with any questions\\n\\n**Tax Planning Opportunities:**\\n• Consider tax-loss harvesting for remaining positions\\n• Review charitable giving strategies\\n• Evaluate retirement account contributions\\n\\nIf you need assistance with tax planning or have questions about any of these documents, please don't hesitate to contact me.\\n\\nBest regards,\\n\\nDavid Wilson\\nTax Services Manager\\nWealthWise Financial Advisors\",\n  \"isRead\": false,\n  \"timestamp\": \"2024-01-11T11:30:00Z\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "David Wilson - Tax Documents",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "id",
+              "value": "04d7e559-b5af-431b-a62c-d405b437d22b",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "8927ed8b-c594-4d8b-9d1b-f39b109ae6b8",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "/messages/:id/read",
+      "responses": [
+        {
+          "uuid": "1ae467ad-c384-4b86-b6b6-3f1e2e585e8c",
+          "body": "{\n  \"success\": true,\n  \"id\": \"{{urlParam 'id'}}\"\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "7874beae-4687-427f-a175-7a795f40bceb"
+    },
+    {
+      "type": "route",
+      "uuid": "9f759012-2376-47c2-9642-e195839a09df"
+    },
+    {
+      "type": "route",
+      "uuid": "209e4f7e-dd56-4e20-abb8-addf4435f93b"
+    },
+    {
+      "type": "route",
+      "uuid": "8927ed8b-c594-4d8b-9d1b-f39b109ae6b8"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [],
+  "callbacks": []
+}

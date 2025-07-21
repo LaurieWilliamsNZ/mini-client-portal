@@ -14,7 +14,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
-  userName = 'John Doe',
+  userName,
   userAvatar,
   unreadMessages = 5,
   onMessagePress,
@@ -61,12 +61,9 @@ const Header: React.FC<HeaderProps> = ({
           testID="header-profile-button"
         >
           <View style={styles.avatarContainer}>
-            <Image
-              source={{ uri: 'https://i.pravatar.cc/80?img=1' }}
-              style={styles.avatar}
-            />
+            <Image source={{ uri: userAvatar }} style={styles.avatar} />
           </View>
-          <Text style={styles.userName}>{userName}</Text>
+          {userName && <Text style={styles.userName}>{userName}</Text>}
         </TouchableOpacity>
       </View>
     </View>

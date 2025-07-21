@@ -1,0 +1,43 @@
+{
+  "welcomeShown": true,
+  "maxLogsPerEnvironment": 100,
+  "truncateRouteName": true,
+  "mainMenuSize": 100,
+  "secondaryMenuSize": 200,
+  "fakerLocale": "en",
+  "fakerSeed": null,
+  "lastChangelog": "9.3.0",
+  "environments": [
+    {
+      "uuid": "37f69daf-1ef6-4a96-a217-2ec03b71a101",
+      "path": "/Users/lauriewilliams/Library/Application Support/mockoon/storage/MiniClientDashboard.json"
+    }
+  ],
+  "serverOptions": {
+    "parseBody": true
+  },
+  "disabledRoutes": {},
+  "collapsedFolders": {},
+  "enableTelemetry": true,
+  "storagePrettyPrint": true,
+  "fileWatcherEnabled": "disabled",
+  "dialogWorkingDir": "/Users/lauriewilliams/Library/Application Support/mockoon/storage",
+  "startEnvironmentsOnLoad": false,
+  "logTransactions": false,
+  "environmentsCategoriesOrder": ["local", "cloud"],
+  "environmentsCategoriesCollapsed": {
+    "local": false,
+    "cloud": false
+  },
+  "envVarsPrefix": "MOCKOON_",
+  "activeEnvironmentUuid": "37f69daf-1ef6-4a96-a217-2ec03b71a101",
+  "enableRandomLatency": false,
+  "recentLocalEnvironments": [
+    {
+      "name": "MiniClientDashboard",
+      "path": "/Users/lauriewilliams/Library/Application Support/mockoon/storage/MiniClientDashboard.json"
+    }
+  ],
+  "displayLogsIsoTimestamp": false,
+  "deployPreferredRegion": null
+}

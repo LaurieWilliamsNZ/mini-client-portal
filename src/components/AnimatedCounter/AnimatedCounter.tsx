@@ -42,10 +42,10 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
 
   useEffect(() => {
     const targetValue = getNumericValue(value);
-    
+
     // Reset animation
     animatedValue.setValue(0);
-    
+
     // Clear any existing interval
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -56,17 +56,19 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
       // Start counting animation
       const startTime = Date.now();
       const startValue = 0;
-      
+
       intervalRef.current = setInterval(() => {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        
+
         // Smoother easing function - easeOutExpo
-        const easeOutExpo = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-        const currentValue = startValue + (targetValue - startValue) * easeOutExpo;
-        
+        const easeOutExpo =
+          progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        const currentValue =
+          startValue + (targetValue - startValue) * easeOutExpo;
+
         setDisplayValue(formatCurrency(currentValue));
-        
+
         if (progress >= 1) {
           setDisplayValue(value);
           if (intervalRef.current) {
@@ -91,4 +93,4 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
   );
 };
 
-export default AnimatedCounter; 
+export default AnimatedCounter;

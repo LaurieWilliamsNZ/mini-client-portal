@@ -13,6 +13,8 @@ const CheckboxInput: React.FC<{
     activeOpacity={0.7}
   >
     <View style={[styles.checkbox, value && styles.checkboxChecked]}>
+      {/* TODO: fix ts */}
+      {/* @ts-ignore */}
       {value && <Icon name="check" size={14} color={theme.colors.primary} />}
     </View>
     <Text style={styles.label}>Remember me for 30 days</Text>

@@ -3,9 +3,9 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { Text } from 'react-native-paper';
-import Button from '@/src/components/button/primaryButton';
-import { theme } from '@/src/theme';
+import { dashboardTheme as theme } from '@/src/theme';
 import { useAuthStore } from '@/src/store/authStore';
+import { useMessagesStore } from '@/src/store/messagesStore';
 import InfoCard from './components/infoCard/InfoCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import InfoDetailCard from './components/InfoDetailCard';
@@ -13,6 +13,14 @@ import Header from '@/src/components/Header';
 
 const DashboardScreen = () => {
   const { user, logout } = useAuthStore();
+  const {
+    messages,
+    unreadCount,
+    fetchMessages,
+    fetchMessageDetail,
+    markAsRead,
+    isLoading: messagesLoading,
+  } = useMessagesStore();
   const [animationDelay, setAnimationDelay] = React.useState(0);
 
   React.useEffect(() => {
@@ -23,22 +31,37 @@ const DashboardScreen = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleMessagePress = () => {
-    // Handle message button press
-    console.log('Message button pressed');
-  };
+  React.useEffect(() => {
+    fetchMessages();
+  }, [fetchMessages]);
 
   const handleProfilePress = () => {
     // Handle profile button press
-    console.log('Profile button pressed');
+  };
+
+  const handleMessagePress = async (messageId: string) => {
+    try {
+      await fetchMessageDetail(messageId);
+    } catch (error) {
+      console.error('Error fetching message details:', error);
+    }
+  };
+
+  const handleMarkAsRead = async (messageId: string) => {
+    try {
+      await markAsRead(messageId);
+    } catch (error) {
+      console.error('Error marking message as read:', error);
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Header
-        userName={user?.name || 'John Doe'}
-        unreadMessages={5}
-        onMessagePress={handleMessagePress}
+        userName={`${user?.firstName} ${user?.lastName}`}
+        userAvatar={user?.avatar}
+        unreadMessages={unreadCount}
+        onMessagePress={() => console.log('Header message button pressed')}
         onProfilePress={handleProfilePress}
       />
       <ScrollView
@@ -47,7 +70,7 @@ const DashboardScreen = () => {
       >
         <View style={styles.welcomeSection}>
           <Text style={styles.welcomeText}>
-            Welcome back, {user?.name || 'John'}
+            Welcome back, {user?.firstName}
           </Text>
           <Text style={styles.welcomeSubtext}>
             Here's what's happening with your investments today
@@ -155,27 +178,10 @@ const DashboardScreen = () => {
             title="Messages"
             subtitle="Recent communications"
             type="messages"
-            unreadCount={5}
-            messages={[
-              {
-                sender: 'Michael Chen',
-                time: '2h ago',
-                title: 'Q4 Portfolio Review',
-                preview: 'Your quarterly review is ready for discussion...',
-              },
-              {
-                sender: 'Lisa Rodriguez',
-                time: '1d ago',
-                title: 'Dividend Payment Processed',
-                preview: 'Your quarterly dividend of $2,847.50 has been...',
-              },
-              {
-                sender: 'System Alert',
-                time: '2d ago',
-                title: 'Market Volatility Alert',
-                preview: 'Increased volatility detected in tech sector...',
-              },
-            ]}
+            unreadCount={unreadCount}
+            messages={messages}
+            onMessagePress={handleMessagePress}
+            onMarkAsRead={handleMarkAsRead}
           />
         </View>
       </ScrollView>

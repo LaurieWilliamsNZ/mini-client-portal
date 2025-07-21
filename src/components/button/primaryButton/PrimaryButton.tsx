@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button as PaperButton, ActivityIndicator } from 'react-native-paper';
-import { StyleSheet, View } from 'react-native';
+import { Button as PaperButton } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
 
 const PrimaryButton: React.FC<{
   onPress: () => void;

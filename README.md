@@ -96,59 +96,6 @@ The app uses a centralized theme system (`src/theme.ts`) with:
 - **Responsive scaling**: Automatic scaling for different screen sizes
 - **Dashboard theme**: Separate theme with specific colors and fonts for dashboard components
 
-## Setup Instructions
-
-### Prerequisites
-
-- Node.js (v16 or higher)
-- Yarn package manager
-- Expo CLI (`npm install -g @expo/cli`)
-- iOS Simulator (for iOS development)
-- Android Studio (for Android development)
-
-### Installation
-
-1. **Clone the repository:**
-
-   ```sh
-   git clone https://github.com/LaurieWilliamsNZ/mini-client-portal.git
-   cd mini-client-portal
-   ```
-
-2. **Install dependencies:**
-
-   ```sh
-   yarn install
-   ```
-
-3. **Environment Configuration:**
-
-   Create a `.env` file in the root directory with the following variables:
-
-   ```env
-   POLYGON_API_KEY=your_polygon_api_key_here
-   MESSAGING_API_URL=your_messaging_api_endpoint
-   MESSAGING_API_KEY=your_messaging_api_key
-   ```
-
-4. **Start the development server:**
-
-   ```sh
-   yarn start
-   ```
-
-5. **Run on device/simulator:**
-   - Press `i` for iOS simulator
-   - Press `a` for Android emulator
-   - Scan QR code with Expo Go app on your phone
-
-### Development Workflow
-
-- **Hot reloading**: Changes reflect immediately in the app
-- **TypeScript checking**: Automatic type checking during development
-- **ESLint**: Code quality enforcement
-- **Prettier**: Automatic code formatting
-
 ## Architecture & Approach
 
 ### Design Philosophy
@@ -189,9 +136,36 @@ src/
 
 ### State Management
 
-- **Zustand**: Lightweight state management for authentication and user data
-- **Local State**: Component-level state for UI interactions
-- **API State**: Centralized API calls with proper error handling
+The application uses Zustand for state management with separate stores for:
+
+- **Authentication Store** (`src/store/authStore.ts`): Manages user authentication state, login/logout, and user profile data
+- **Messages Store** (`src/store/messagesStore.ts`): Handles message fetching, marking as read, and unread count management
+
+### API Integration
+
+The app integrates with a mock API server (Mockoon) for:
+
+- **Authentication**: Login endpoint with JWT token response
+- **Messages**: Fetch messages, mark as read, and get unread count
+- **Dashboard Data**: Financial information and portfolio data
+
+### Environment Configuration
+
+API endpoints are configured via environment variables:
+
+- **API Base URL**: `API_PATH` environment variable
+- **Configuration File**: `src/config/env.ts` centralizes all API endpoints
+- **Endpoints**:
+  - **Login**: `${API_PATH}/auth/login`
+  - **Messages**: `${API_PATH}/messages`
+  - **Mark as Read**: `${API_PATH}/messages/:id/read`
+
+### Configuration
+
+Environment variables are loaded from `src/config/env.ts` and used throughout the application in:
+
+- `src/store/authStore.ts` - Authentication API calls
+- `src/store/messagesStore.ts` - Messages API calls
 
 ## Development
 
@@ -335,3 +309,196 @@ interface Message {
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Environment Variables
+
+The application uses environment variables for API configuration. You can set these by creating a `.env` file in the `src` directory:
+
+```bash
+# API Configuration
+API_PATH=http://localhost:3001
+```
+
+### Available Environment Variables
+
+- `API_PATH`: The base URL for the API server (defaults to `http://localhost:3001`)
+
+### API Endpoints
+
+The application automatically constructs API endpoints based on the `API_PATH`:
+
+- **Authentication**: `${API_PATH}/auth/login`
+- **Messages**: `${API_PATH}/messages`
+- **Message Details**: `${API_PATH}/messages/:id`
+- **Mark as Read**: `${API_PATH}/messages/:id/read`
+
+### Configuration
+
+Environment variables are loaded from `src/config/env.ts` and used throughout the application in:
+
+- `src/store/authStore.ts` - Authentication API calls
+- `src/store/messagesStore.ts` - Messages API calls
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- Yarn or npm
+- Mockoon (for API mocking)
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd mini-client-portal
+```
+
+2. Install dependencies:
+
+```bash
+yarn install
+# or
+npm install
+```
+
+3. Set up environment variables:
+   Create a `.env` file in the `src` directory:
+
+```bash
+API_PATH=http://localhost:3001
+```
+
+### Mockoon Setup
+
+1. **Install Mockoon** (if not already installed):
+   - Download from [mockoon.com](https://mockoon.com)
+   - Or install via CLI: `npm install -g @mockoon/cli`
+
+2. **Import Mockoon Configuration**:
+   - Open Mockoon
+   - Import the configuration file: `mockoon/MiniClientDashboard.json`
+   - Or run via CLI: `mockoon-cli start --data mockoon/MiniClientDashboard.json`
+
+3. **Start Mockoon Server**:
+   - The server will start on `http://localhost:3001`
+   - This provides the mock API endpoints for the application
+
+### Login Credentials
+
+Use these credentials to log into the application:
+
+- **Email**: `user@example.com`
+- **Password**: `password123`
+
+### Running the Application
+
+1. **Start the development server**:
+
+```bash
+yarn start
+# or
+npm start
+```
+
+2. **Run on specific platform**:
+
+```bash
+# iOS
+yarn ios
+# or
+npm run ios
+
+# Android
+yarn android
+# or
+npm run android
+
+# Web
+yarn web
+# or
+npm run web
+```
+
+### Testing
+
+Run the test suite:
+
+```bash
+yarn test
+# or
+npm test
+```
+
+Run tests in watch mode:
+
+```bash
+yarn test:watch
+# or
+npm run test:watch
+```
+
+## TODO
+
+### High Priority
+
+- [ ] **State Persistence**: Implement token storage and persistence for authentication state
+  - Store JWT token securely using AsyncStorage or SecureStore
+  - Auto-refresh tokens before expiration
+  - Use stored token for all authenticated API calls
+  - Implement automatic logout on token expiration
+
+### Authentication & Security
+
+- [ ] **Enhanced Authentication**: Add refresh token mechanism and secure token storage
+- [ ] **Password Reset**: Implement forgot password functionality
+- [ ] **Biometric Authentication**: Add fingerprint/face ID support for mobile
+- [ ] **Session Management**: Handle multiple device sessions and logout from all devices
+- [ ] **Input Validation**: Add client-side validation for all forms
+
+### User Experience
+
+- [ ] **Offline Support**: Cache data and work offline with sync when connection restored
+- [ ] **Push Notifications**: Implement push notifications for new messages and alerts
+- [ ] **Loading States**: Add skeleton screens and better loading indicators
+- [ ] **Error Handling**: Implement comprehensive error boundaries and user-friendly error messages
+- [ ] **Accessibility**: Add screen reader support and accessibility features
+
+### Dashboard & Data
+
+- [ ] **Real-time Updates**: Implement WebSocket connections for live data updates
+- [ ] **Data Visualization**: Add charts and graphs for financial data
+- [ ] **Export Functionality**: Allow users to export data as PDF/CSV
+- [ ] **Search & Filter**: Add search functionality for messages and transactions
+- [ ] **Pagination**: Implement infinite scroll or pagination for large datasets
+
+### Performance & Optimization
+
+- [ ] **Image Optimization**: Optimize and lazy load images
+- [ ] **Bundle Optimization**: Reduce app bundle size
+- [ ] **Memory Management**: Optimize component re-renders and memory usage
+- [ ] **Caching Strategy**: Implement intelligent caching for API responses
+
+### Testing & Quality
+
+- [ ] **E2E Testing**: Add end-to-end tests with Detox or similar
+- [ ] **Performance Testing**: Add performance monitoring and testing
+- [ ] **Security Testing**: Implement security testing for authentication flows
+- [ ] **Accessibility Testing**: Add automated accessibility testing
+
+### Infrastructure & Deployment
+
+- [ ] **CI/CD Pipeline**: Set up automated testing and deployment
+- [ ] **Environment Management**: Add staging and production environment configurations
+- [ ] **Monitoring**: Add crash reporting and analytics
+- [ ] **Backup Strategy**: Implement data backup and recovery procedures
+
+### Features
+
+- [ ] **Profile Management**: Allow users to update profile information
+- [ ] **Settings Page**: Add app settings and preferences
+- [ ] **Dark Mode**: Implement dark/light theme toggle
+- [ ] **Multi-language Support**: Add internationalization (i18n)
+- [ ] **File Upload**: Add support for document uploads and attachments
