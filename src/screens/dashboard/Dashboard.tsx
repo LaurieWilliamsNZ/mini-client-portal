@@ -52,15 +52,71 @@ const DashboardScreen = () => {
           <InfoDetailCard
             title="Market Watch"
             subtitle="Real-time stock data"
+            type="tickers"
+            tickers={[
+              {
+                symbol: 'AAPL',
+                name: 'Apple Inc.',
+                price: '$175.43',
+                changePercent: '+2.34%',
+                changeAmount: '+$4.01',
+                isPositive: true,
+              },
+              {
+                symbol: 'MSFT',
+                name: 'Microsoft Corp.',
+                price: '$378.85',
+                changePercent: '+1.87%',
+                changeAmount: '+$6.95',
+                isPositive: true,
+              },
+              {
+                symbol: 'TSLA',
+                name: 'Tesla Inc.',
+                price: '$248.42',
+                changePercent: '-0.92%',
+                changeAmount: '-$2.31',
+                isPositive: false,
+              },
+            ]}
           />
           <InfoDetailCard
             title="Recent Transactions"
             subtitle="Last 5 transactions"
+            type="positions"
+            transactions={[
+              { date: 'Dec 15', investment: 'Apple Inc.', type: 'buy', amount: '$5,250' },
+              { date: 'Dec 12', investment: 'Microsoft Corp.', type: 'sell', amount: '$3,800' },
+              { date: 'Dec 10', investment: 'Tesla Inc.', type: 'buy', amount: '$7,450' },
+              { date: 'Dec 08', investment: 'S&P 500 ETF', type: 'buy', amount: '$2,100' },
+              { date: 'Dec 05', investment: 'Amazon.com', type: 'sell', amount: '$4,320' },
+            ]}
           />
           <InfoDetailCard
             title="Messages"
             subtitle="Recent communications"
+            type="messages"
             unreadCount={5}
+            messages={[
+              {
+                sender: 'Michael Chen',
+                time: '2h ago',
+                title: 'Q4 Portfolio Review',
+                preview: 'Your quarterly review is ready for discussion...',
+              },
+              {
+                sender: 'Lisa Rodriguez',
+                time: '1d ago',
+                title: 'Dividend Payment Processed',
+                preview: 'Your quarterly dividend of $2,847.50 has been...',
+              },
+              {
+                sender: 'System Alert',
+                time: '2d ago',
+                title: 'Market Volatility Alert',
+                preview: 'Increased volatility detected in tech sector...',
+              },
+            ]}
           />
         </View>
       </ScrollView>

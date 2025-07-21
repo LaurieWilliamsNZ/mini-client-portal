@@ -102,4 +102,91 @@ export const theme = {
     base: moderateScale(8),
     lg: moderateScale(12),
   },
+  customFonts: {
+    tableText: {
+      fontFamily: 'Inter-Regular',
+      fontWeight: '400' as '400',
+      fontSize: FONT_SIZE_SM,
+    },
+    tableTextMedium: {
+      fontFamily: 'Inter-Medium',
+      fontWeight: '500' as '500',
+      fontSize: FONT_SIZE_SM,
+    },
+    messageText: {
+      fontFamily: 'Inter-Regular',
+      fontWeight: '400' as '400',
+      fontSize: FONT_SIZE_SM,
+    },
+    messageTextMedium: {
+      fontFamily: 'Inter-Medium',
+      fontWeight: '500' as '500',
+      fontSize: FONT_SIZE_SM,
+    },
+  },
+};
+
+// Dashboard-specific theme with custom font sizes
+export const dashboardTheme = {
+  ...theme,
+  fontSize: {
+    xs: normalizeFont(12),
+    sm: normalizeFont(14),
+    base: normalizeFont(16),
+    lg: normalizeFont(20),
+    xl: normalizeFont(24),
+  },
+  colors: {
+    ...theme.colors,
+    // Buy/Sell pill colors
+    buyPillBg: '#dcfce7',
+    sellPillBg: '#fee2e2',
+    buyText: '#166534',
+    sellText: '#991b1b',
+    // Unread pill colors
+    unreadPillBg: '#fee2e2',
+    unreadText: '#991b1b',
+    // Message colors
+    messageSender: '#111827',
+    messageTime: '#6b7280',
+    messageTitle: '#4b5563',
+    messagePreview: '#6b7280',
+    messageIndicator: '#ef4444',
+    viewAllText: '#0284c7',
+    // Ticker colors
+    tickerPositive: '#16A34A',
+    tickerAmount: '#6B7280',
+  },
+  customFonts: {
+    tableText: {
+      fontFamily: 'Inter-Regular',
+      fontWeight: '400' as '400',
+      fontSize: normalizeFont(12),
+    },
+    tableTextMedium: {
+      fontFamily: 'Inter-Medium',
+      fontWeight: '500' as '500',
+      fontSize: normalizeFont(12),
+    },
+    messageText: {
+      fontFamily: 'Inter-Regular',
+      fontWeight: '400' as '400',
+      fontSize: normalizeFont(14),
+    },
+    messageTextMedium: {
+      fontFamily: 'Inter-Medium',
+      fontWeight: '500' as '500',
+      fontSize: normalizeFont(14),
+    },
+    unreadText: {
+      fontFamily: 'Inter-Medium',
+      fontWeight: '500' as '500',
+      fontSize: normalizeFont(12),
+    },
+    viewAllText: {
+      fontFamily: 'Inter-Medium',
+      fontWeight: '500' as '500',
+      fontSize: normalizeFont(14),
+    },
+  },
 };
