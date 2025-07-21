@@ -5,11 +5,13 @@ A React Native client portal application built with Expo, featuring a modern das
 ## Features
 
 - **Dashboard**: Financial information cards showing portfolio value, investments, and return rates
+- **Multiple Content Types**: Market watch tickers, transaction tables, and message lists
 - **Authentication**: Secure login system with form validation
 - **Responsive Design**: Clean, modern UI that works across different screen sizes
 - **Theme System**: Centralized theming with consistent colors, fonts, and spacing
 - **Component Library**: Reusable UI components for buttons, cards, inputs, and more
 - **TypeScript**: Full TypeScript support for better development experience
+- **Testing**: Comprehensive Jest tests for all components
 
 ## Project Structure
 
@@ -52,8 +54,21 @@ mini-client-portal/
 
 ## Key Components
 
+### InfoDetailCard Component
+
+Located at `src/screens/dashboard/components/InfoDetailCard/`, this component displays financial information with:
+
+- **Multiple content types**: Tickers (market watch), positions (transactions), and messages
+- **Dynamic content**: Title, subtitle, and various data types
+- **Icon support**: Custom icons for different card types
+- **Theme-based styling**: Consistent colors, fonts, and spacing
+- **Responsive design**: Adapts to different screen sizes
+- **Test coverage**: Comprehensive Jest tests with 16 test cases
+
 ### InfoCard Component
+
 Located at `src/screens/dashboard/components/infoCard/`, this component displays financial information with:
+
 - **Dynamic content**: Title, value, and change text
 - **Icon support**: Wallet, investment, or return icons
 - **Text styling**: Theme-based or standard text styles
@@ -61,32 +76,40 @@ Located at `src/screens/dashboard/components/infoCard/`, this component displays
 - **Test coverage**: Comprehensive Jest tests
 
 ### Theme System
+
 The app uses a centralized theme system (`src/theme.ts`) with:
+
 - **Color palette**: Primary, secondary, and semantic colors
 - **Typography**: Font families, sizes, and weights
 - **Spacing**: Consistent spacing and border radius values
 - **Responsive scaling**: Automatic scaling for different screen sizes
+- **Dashboard theme**: Separate theme with specific colors and fonts for dashboard components
 
 ## Setup Instructions
 
 ### Prerequisites
+
 - Node.js (v16 or higher)
 - Yarn package manager
 - Expo CLI (`npm install -g @expo/cli`)
 
 ### Installation
+
 1. **Clone the repository:**
+
    ```sh
    git clone https://github.com/LaurieWilliamsNZ/mini-client-portal.git
    cd mini-client-portal
    ```
 
 2. **Install dependencies:**
+
    ```sh
    yarn install
    ```
 
 3. **Start the development server:**
+
    ```sh
    yarn start
    ```
@@ -99,18 +122,25 @@ The app uses a centralized theme system (`src/theme.ts`) with:
 ## Development
 
 ### Running Tests
+
 ```sh
 # Run all tests
 yarn test
 
 # Run specific test file
-yarn test InfoCard.test.tsx
+yarn test InfoDetailCard.test.tsx
 
 # Run tests in watch mode
 yarn test --watch
 ```
 
+**Test Coverage:**
+- InfoDetailCard: 16 test cases covering all content types (tickers, positions, messages)
+- Tests avoid hardcoded values and focus on component structure
+- Mock data used for dynamic content testing
+
 ### Code Structure
+
 - **Components**: Located in `src/components/` for reusable UI elements
 - **Screens**: Located in `src/screens/` for main app views
 - **Navigation**: Configured in `src/navigation/`
@@ -118,6 +148,7 @@ yarn test --watch
 - **Styling**: Theme-based styling with consistent design tokens
 
 ### Adding New Components
+
 1. Create component in appropriate directory
 2. Add TypeScript interfaces for props
 3. Use theme system for styling

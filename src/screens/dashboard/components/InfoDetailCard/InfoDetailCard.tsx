@@ -493,7 +493,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 9999,
-    backgroundColor: '#ef4444',
+    backgroundColor: theme.colors.messageIndicator,
     marginLeft: theme.spacing(2),
   },
   viewAllButton: {
@@ -506,10 +506,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   viewAllText: {
-    fontSize: 14,
-    fontWeight: '500',
-    fontFamily: 'Inter-Medium',
-    color: '#0284c7',
+    ...theme.customFonts.viewAllText,
+    color: theme.colors.viewAllText,
     textAlign: 'center',
   },
   // Ticker styles
