@@ -13,6 +13,15 @@ import Header from '@/src/components/Header';
 
 const DashboardScreen = () => {
   const { user, logout } = useAuthStore();
+  const [animationDelay, setAnimationDelay] = React.useState(0);
+
+  React.useEffect(() => {
+    // Small delay to ensure smooth initial render
+    const timer = setTimeout(() => {
+      setAnimationDelay(300);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleMessagePress = () => {
     // Handle message button press
@@ -51,6 +60,8 @@ const DashboardScreen = () => {
             value="$127,450"
             icon="wallet"
             change="+2.4% from last month"
+            animated={animationDelay > 0}
+            animationDelay={animationDelay > 0 ? 0 : 0}
           />
           <InfoCard
             title="Active Investments"
@@ -58,12 +69,16 @@ const DashboardScreen = () => {
             icon="investment"
             change="Across 4 sectors"
             textStyle="standard"
+            animated={animationDelay > 0}
+            animationDelay={animationDelay > 0 ? 200 : 0}
           />
           <InfoCard
             title="Recent Return Rate"
             value="8.4%"
             icon="return"
             change="Above market average"
+            animated={animationDelay > 0}
+            animationDelay={animationDelay > 0 ? 400 : 0}
           />
         </View>
 

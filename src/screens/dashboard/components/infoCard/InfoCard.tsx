@@ -5,6 +5,7 @@ import Investment from '@/assets/investment.svg';
 import Return from '@/assets/return.svg';
 import UpArrow from '@/assets/upArrow.svg';
 import { theme } from '@/src/theme';
+import AnimatedCounter from '@/src/components/AnimatedCounter';
 
 interface InfoCardProps {
   title?: string;
@@ -12,6 +13,8 @@ interface InfoCardProps {
   change?: string;
   icon?: 'wallet' | 'investment' | 'return';
   textStyle?: 'standard' | 'theme';
+  animated?: boolean;
+  animationDelay?: number;
   testID?: string;
 }
 
@@ -21,6 +24,8 @@ const InfoCard = ({
   change,
   icon = 'wallet',
   textStyle = 'theme',
+  animated = false,
+  animationDelay = 0,
   testID = 'info-card',
 }: InfoCardProps) => {
   const getIconComponent = () => {
@@ -62,7 +67,18 @@ const InfoCard = ({
       <View style={[styles.cardContent, styles.contentLayout]}>
         <View style={[styles.textContent, styles.contentLayout]}>
           {title && <Text style={textStyles.label}>{title}</Text>}
-          {value && <Text style={textStyles.value}>{value}</Text>}{' '}
+          {value && (
+            animated ? (
+              <AnimatedCounter 
+                value={value} 
+                style={textStyles.value}
+                delay={animationDelay}
+                testID="animated-value"
+              />
+            ) : (
+              <Text style={textStyles.value}>{value}</Text>
+            )
+          )}
           {change && <Text style={textStyles.changeText}>{change}</Text>}
           {textStyle !== 'standard' && (
             <UpArrow style={styles.changeIcon} width={11} height={14} />
