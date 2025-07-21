@@ -88,16 +88,24 @@ const InfoDetailCard = ({
             <Text style={styles.tickerPrice}>{ticker.price}</Text>
           </View>
           <View style={styles.tickerRight}>
-            <Text style={[
-              styles.changePercentText,
-              { color: ticker.isPositive ? theme.colors.tickerPositive : theme.colors.accent }
-            ]}>
+            <Text
+              style={[
+                styles.changePercentText,
+                {
+                  color: ticker.isPositive
+                    ? theme.colors.tickerPositive
+                    : theme.colors.accent,
+                },
+              ]}
+            >
               {ticker.changePercent}
             </Text>
-            <Text style={[
-              styles.changeAmountText,
-              { color: theme.colors.tickerAmount }
-            ]}>
+            <Text
+              style={[
+                styles.changeAmountText,
+                { color: theme.colors.tickerAmount },
+              ]}
+            >
               {ticker.changeAmount}
             </Text>
           </View>
@@ -126,12 +134,12 @@ const InfoDetailCard = ({
       </View>
       <View style={styles.tableBody}>
         {transactions?.map((transaction, index) => (
-          <View 
-            key={index} 
+          <View
+            key={index}
             style={[
               styles.tableRow,
               index === 0 && styles.firstTableRow,
-              index === (transactions?.length || 0) - 1 && styles.lastTableRow
+              index === (transactions?.length || 0) - 1 && styles.lastTableRow,
             ]}
           >
             <View style={styles.tableCell}>
@@ -141,14 +149,18 @@ const InfoDetailCard = ({
               <Text style={styles.tableCellText}>{transaction.investment}</Text>
             </View>
             <View style={styles.typeCell}>
-              <View style={[
-                styles.typePill,
-                transaction.type === 'buy' ? styles.buyPill : styles.sellPill
-              ]}>
-                <Text 
+              <View
+                style={[
+                  styles.typePill,
+                  transaction.type === 'buy' ? styles.buyPill : styles.sellPill,
+                ]}
+              >
+                <Text
                   style={[
                     styles.typeText,
-                    transaction.type === 'buy' ? styles.buyText : styles.sellText
+                    transaction.type === 'buy'
+                      ? styles.buyText
+                      : styles.sellText,
                   ]}
                 >
                   {transaction.type === 'buy' ? 'Buy' : 'Sell'}
@@ -166,31 +178,37 @@ const InfoDetailCard = ({
 
   const renderMessagesContent = () => (
     <View style={styles.messagesContainer}>
-              {messages?.map((message, index) => (
-          <View 
-            key={index} 
-            style={[
-              styles.messageItem,
-              index === (messages?.length || 0) - 1 && styles.lastMessageItem
-            ]}
-          >
-            <View style={styles.messageAvatar}>
-              <Image 
-                source={{ uri: `https://i.pravatar.cc/80?img=${index + 1}` }}
-                style={styles.avatarImage}
-              />
-            </View>
-            <View style={styles.messageContent}>
-              <View style={styles.messageHeader}>
-                <Text style={styles.messageSender}>{message.sender}</Text>
-                <Text style={styles.messageTime}>{message.time}</Text>
-              </View>
-              <Text style={styles.messageTitle}>{message.title}</Text>
-              <Text style={styles.messagePreview} numberOfLines={1} ellipsizeMode="tail">{message.preview}</Text>
-            </View>
-            <View style={styles.messageIndicator} />
+      {messages?.map((message, index) => (
+        <View
+          key={index}
+          style={[
+            styles.messageItem,
+            index === (messages?.length || 0) - 1 && styles.lastMessageItem,
+          ]}
+        >
+          <View style={styles.messageAvatar}>
+            <Image
+              source={{ uri: `https://i.pravatar.cc/80?img=${index + 1}` }}
+              style={styles.avatarImage}
+            />
           </View>
-        ))}
+          <View style={styles.messageContent}>
+            <View style={styles.messageHeader}>
+              <Text style={styles.messageSender}>{message.sender}</Text>
+              <Text style={styles.messageTime}>{message.time}</Text>
+            </View>
+            <Text style={styles.messageTitle}>{message.title}</Text>
+            <Text
+              style={styles.messagePreview}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {message.preview}
+            </Text>
+          </View>
+          <View style={styles.messageIndicator} />
+        </View>
+      ))}
       <View style={styles.viewAllButton}>
         <Text style={styles.viewAllText}>View All Messages</Text>
       </View>

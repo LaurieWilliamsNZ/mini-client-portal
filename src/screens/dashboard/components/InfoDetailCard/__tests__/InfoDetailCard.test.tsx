@@ -194,12 +194,7 @@ describe('InfoDetailCard', () => {
     });
 
     it('renders empty tickers container when no tickers provided', () => {
-      render(
-        <InfoDetailCard
-          title="Market Watch"
-          type="tickers"
-        />
-      );
+      render(<InfoDetailCard title="Market Watch" type="tickers" />);
 
       // Should still render the card structure
       expect(screen.getByTestId('info-detail-card')).toBeTruthy();
@@ -251,12 +246,7 @@ describe('InfoDetailCard', () => {
     });
 
     it('renders empty table when no transactions provided', () => {
-      render(
-        <InfoDetailCard
-          title="Recent Transactions"
-          type="positions"
-        />
-      );
+      render(<InfoDetailCard title="Recent Transactions" type="positions" />);
 
       // Should still render the card structure and headers
       expect(screen.getByTestId('info-detail-card')).toBeTruthy();
@@ -291,20 +281,21 @@ describe('InfoDetailCard', () => {
       expect(screen.getByText('Market Alert')).toBeTruthy();
 
       // Check message previews
-      expect(screen.getByText('Your portfolio has been updated with the latest transactions.')).toBeTruthy();
-      expect(screen.getByText('Important market update for your investments.')).toBeTruthy();
+      expect(
+        screen.getByText(
+          'Your portfolio has been updated with the latest transactions.'
+        )
+      ).toBeTruthy();
+      expect(
+        screen.getByText('Important market update for your investments.')
+      ).toBeTruthy();
 
       // Check "View All Messages" button
       expect(screen.getByText('View All Messages')).toBeTruthy();
     });
 
     it('renders empty messages container when no messages provided', () => {
-      render(
-        <InfoDetailCard
-          title="Messages"
-          type="messages"
-        />
-      );
+      render(<InfoDetailCard title="Messages" type="messages" />);
 
       // Should still render the card structure and "View All Messages" button
       expect(screen.getByTestId('info-detail-card')).toBeTruthy();
@@ -315,12 +306,7 @@ describe('InfoDetailCard', () => {
 
   describe('Default Content Type', () => {
     it('defaults to tickers type when no type specified', () => {
-      render(
-        <InfoDetailCard
-          title="Default Card"
-          tickers={mockTickers}
-        />
-      );
+      render(<InfoDetailCard title="Default Card" tickers={mockTickers} />);
 
       // Should render tickers content
       expect(screen.getByText('AAPL')).toBeTruthy();
@@ -358,7 +344,7 @@ describe('InfoDetailCard', () => {
   describe('Icon Support', () => {
     it('renders icon when provided', () => {
       const mockIcon = <Text testID="mock-icon">Icon</Text>;
-      
+
       render(
         <InfoDetailCard
           title="Test Card"
@@ -390,4 +376,4 @@ describe('InfoDetailCard', () => {
       expect(screen.getByTestId('detail-card-title')).toBeTruthy();
     });
   });
-}); 
+});

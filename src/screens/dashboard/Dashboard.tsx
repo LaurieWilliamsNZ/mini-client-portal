@@ -9,21 +9,40 @@ import { useAuthStore } from '@/src/store/authStore';
 import InfoCard from './components/infoCard/InfoCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import InfoDetailCard from './components/InfoDetailCard';
+import Header from '@/src/components/Header';
 
 const DashboardScreen = () => {
   const { user, logout } = useAuthStore();
 
+  const handleMessagePress = () => {
+    // Handle message button press
+    console.log('Message button pressed');
+  };
+
+  const handleProfilePress = () => {
+    // Handle profile button press
+    console.log('Profile button pressed');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <Header
+        userName={user?.name || 'John Doe'}
+        unreadMessages={5}
+        onMessagePress={handleMessagePress}
+        onProfilePress={handleProfilePress}
+      />
       <ScrollView
-        style={styles.container}
+        style={styles.scrollView}
         contentContainerStyle={styles.content}
       >
-        <View style={styles.header}>
+        <View style={styles.welcomeSection}>
           <Text style={styles.welcomeText}>
-            Welcome, {user?.name || user?.email}!
+            Welcome back, {user?.name || 'John'}
           </Text>
-          <Button onPress={logout}>Logout</Button>
+          <Text style={styles.welcomeSubtext}>
+            Here's what's happening with your investments today
+          </Text>
         </View>
 
         <View style={styles.cardsContainer}>
@@ -85,11 +104,36 @@ const DashboardScreen = () => {
             subtitle="Last 5 transactions"
             type="positions"
             transactions={[
-              { date: 'Dec 15', investment: 'Apple Inc.', type: 'buy', amount: '$5,250' },
-              { date: 'Dec 12', investment: 'Microsoft Corp.', type: 'sell', amount: '$3,800' },
-              { date: 'Dec 10', investment: 'Tesla Inc.', type: 'buy', amount: '$7,450' },
-              { date: 'Dec 08', investment: 'S&P 500 ETF', type: 'buy', amount: '$2,100' },
-              { date: 'Dec 05', investment: 'Amazon.com', type: 'sell', amount: '$4,320' },
+              {
+                date: 'Dec 15',
+                investment: 'Apple Inc.',
+                type: 'buy',
+                amount: '$5,250',
+              },
+              {
+                date: 'Dec 12',
+                investment: 'Microsoft Corp.',
+                type: 'sell',
+                amount: '$3,800',
+              },
+              {
+                date: 'Dec 10',
+                investment: 'Tesla Inc.',
+                type: 'buy',
+                amount: '$7,450',
+              },
+              {
+                date: 'Dec 08',
+                investment: 'S&P 500 ETF',
+                type: 'buy',
+                amount: '$2,100',
+              },
+              {
+                date: 'Dec 05',
+                investment: 'Amazon.com',
+                type: 'sell',
+                amount: '$4,320',
+              },
             ]}
           />
           <InfoDetailCard
@@ -126,16 +170,21 @@ const DashboardScreen = () => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: theme.colors.background },
+  scrollView: { flex: 1 },
   content: { padding: 16 },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
+  welcomeSection: {
+    marginBottom: 24,
   },
   welcomeText: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...theme.fonts.bold,
+    fontSize: theme.fontSize.xl,
+    color: theme.colors.text,
+    marginBottom: theme.spacing(1),
+  },
+  welcomeSubtext: {
+    ...theme.fonts.regular,
+    fontSize: theme.fontSize.base,
+    color: theme.colors.textHint,
   },
   cardsContainer: {
     gap: 25,

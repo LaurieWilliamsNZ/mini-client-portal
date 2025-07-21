@@ -156,6 +156,16 @@ export const dashboardTheme = {
     // Ticker colors
     tickerPositive: '#16A34A',
     tickerAmount: '#6B7280',
+    // Header colors
+    headerBorder: '#E5E7EB',
+    headerLogoBg: '#3B82F6',
+    headerBrandText: '#111827',
+    headerMessageIcon: '#6B7280',
+    headerMessageBadge: '#EF4444',
+    headerMessageBadgeText: '#FFFFFF',
+    headerAvatarBg: '#3B82F6',
+    headerAvatarText: '#FFFFFF',
+    headerUserName: '#111827',
   },
   customFonts: {
     tableText: {
@@ -187,6 +197,27 @@ export const dashboardTheme = {
       fontFamily: 'Inter-Medium',
       fontWeight: '500' as '500',
       fontSize: normalizeFont(14),
+    },
+    // Header fonts
+    headerBrand: {
+      fontFamily: 'Inter-Bold',
+      fontWeight: '700' as '700',
+      fontSize: normalizeFont(20),
+    },
+    headerMessageBadge: {
+      fontFamily: 'Inter-SemiBold',
+      fontWeight: '600' as '600',
+      fontSize: normalizeFont(10),
+    },
+    headerAvatar: {
+      fontFamily: 'Inter-SemiBold',
+      fontWeight: '600' as '600',
+      fontSize: normalizeFont(12),
+    },
+    headerUserName: {
+      fontFamily: 'Inter-Regular',
+      fontWeight: '400' as '400',
+      fontSize: normalizeFont(16),
     },
   },
 };
