@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 100%; /* white text on dark background */
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 17%; /* dark text on white cards */
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 17%;
+  --primary: 45 100% 51%; /* flyer yellow */
+  --primary-foreground: 0 0% 0%; /* black text on yellow */
+  --secondary: 0 0% 97%; /* light gray */
+  --secondary-foreground: 0 0% 17%; /* dark text */
+  --muted: 0 0% 97%; /* light gray */
+  --muted-foreground: 0 0% 45%; /* medium gray */
+  --accent: 0 0% 97%; /* light gray */
+  --accent-foreground: 0 0% 17%; /* dark text */
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 0 0% 90%; /* light border */
+  --input: 0 0% 90%; /* light border */
+  --ring: 45 100% 51%; /* flyer yellow */
+  --radius: 0.5rem;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  @apply bg-flyer-dark-blue text-flyer-white;
+  min-height: 100vh;
+}
+
+.brand-gradient {
+  background: #FFC505;
+}
+
+.brand-text-gradient {
+  color: #FFC505;
+}
+
+.prize-card {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.form-card {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.brand-button {
+  background: #00923D;
+  box-shadow: 0 2px 4px rgba(0, 146, 61, 0.2);
+  transition: all 0.2s ease;
+}
+
+.brand-button:hover {
+  background: #007A33;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 146, 61, 0.3);
+}
+
+.qr-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, #42B8E2 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, #80CFEB 2px, transparent 2px);
+  background-size: 20px 20px;
+}
